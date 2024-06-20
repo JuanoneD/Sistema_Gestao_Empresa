@@ -3,16 +3,16 @@
 #ifndef Estruturas_dados
 #define Estruturas_dados
 
-typedef struct Array_dinamico_produtos
+typedef struct Array_dinamico_ingrediente
 {
-    Produtos * array;
+    Ingrediente * array;
     int size;
     int capacity;
-}Array_produtos;
+}Array_ingrediente;
 
-Array_produtos * construtor_array_produtos()
+Array_ingrediente * construtor_array_ingrediente()
 {
-    Array_produtos * novo = (Array_produtos*)malloc(sizeof(Array_produtos));
+    Array_ingrediente * novo = (Array_ingrediente*)malloc(sizeof(Array_ingrediente));
     novo->array = NULL;
     novo->capacity = 0;
     novo->size = 0;
@@ -22,7 +22,7 @@ Array_produtos * construtor_array_produtos()
 ///addd
 
 
-Produtos * get_produto(Array_produtos *array,int index)
+Ingrediente * get_ingrediente(Array_ingrediente *array,int index)
 {
     if(index>= array->size)
     {
@@ -33,19 +33,19 @@ Produtos * get_produto(Array_produtos *array,int index)
 
 //// espaço para fazer sort
 
-void organizar_array(Array_produtos * array)
+void organizar_array(Array_ingrediente * array)
 {
     _quick_sort(array,0,array->size-1);
 }
 
-void swap(Array_produtos * array,int i,int j)
+void swap(Array_ingrediente * array,int i,int j)
 {
-	Produtos temp = array->array[i];
+	Ingrediente temp = array->array[i];
 	array->array[i] = array->array[j];
 	array->array[j] = temp;
 }
 
-void _quick_sort(Array_produtos * v, int begin, int end)
+void _quick_sort(Array_ingrediente * v, int begin, int end)
 {
 	if(end <= begin)
 	{
@@ -76,7 +76,7 @@ void _quick_sort(Array_produtos * v, int begin, int end)
 
 ///
 
-int pesquisar_id(Array_produtos *array,int id)
+int pesquisar_id(Array_ingrediente *array,int id)
 {
     // organizar pelo id
     int begin = 0;

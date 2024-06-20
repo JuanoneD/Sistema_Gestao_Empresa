@@ -5,17 +5,17 @@
 #ifndef Estruturas
 #define Estruturas
 
-    typedef struct Produtos
+    typedef struct Ingrediente
     {
         int id;
         char nome[50];
         char un_medida[50];
         float preço;
-    }Produtos;
+    }Ingrediente;
 
-    Produtos construtor_produtos(int id,char name[],char un_med[],float preco)
+    Ingrediente construtor_ingrediente(int id,char name[],char un_med[],float preco)
     {
-        Produtos novo;
+        Ingrediente novo;
         novo.id = id;
         strcpy(novo.nome,name);
         strcpy(novo.un_medida,un_med);
