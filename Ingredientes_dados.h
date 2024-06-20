@@ -122,9 +122,9 @@ int pesquisar_id(Array_ingrediente *array,int id)
 
 void split_line_ingrediente(char *buffer,int *id,char *nome,int *quant,float *preco)
 {
-    char new_id[20],name[100];
+    char new_id[20],name[100],quanti[20],new_preco[50];
     int i=0;
-    while (*buffer && *buffer != '\t')
+    while(*buffer && *buffer != '\t')
     {
         new_id[i++] = *buffer++;
     }
@@ -132,8 +132,33 @@ void split_line_ingrediente(char *buffer,int *id,char *nome,int *quant,float *pr
     buffer++;
     *id = atoi(new_id);
 
-    while
+    i = 0;
+    while(*buffer&&*buffer !='\t')
+    {
+        name[i++] = *buffer++;
+    }
+    name[i] = '\0';
+    buffer++;
+    strcpy(nome,name);
 
+    i=0;
+    while(*buffer&&*buffer !='\t')
+    {
+        quanti[i++] = *buffer++;
+    }
+    quanti[i] = '\0';
+    buffer++;
+    *quant = atoi(quanti);
+
+    i=0;
+    while (*buffer && *buffer!='\t')
+    {
+        new_preco[i++] = *buffer++;
+    }
+    new_preco[i]='\0';
+    *preco = atof(new_preco);
+
+    
     
 }
 void get_tsv_ingrediente(Array_ingrediente * array)
