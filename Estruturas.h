@@ -10,7 +10,7 @@
         int id;
         char nome[50];
         char un_medida[50];
-        float preço;
+        float preco;
     }Ingrediente;
 
     Ingrediente construtor_ingrediente(int id,char name[],char un_med[],float preco)
@@ -19,7 +19,7 @@
         novo.id = id;
         strcpy(novo.nome,name);
         strcpy(novo.un_medida,un_med);
-        novo.preço = preco;
+        novo.preco = preco;
         return novo;
     }
     
@@ -28,21 +28,21 @@
         int id;
         char nome[50];
         char uniMedida[10];
-        Ingrediente ingredientes;
+        char ingredientes[50];
         float preco;
         
     } Produto;
 
-    Produto construtor_produto(int id, char nome[], char uniMedida[], Ingrediente ingredientes, float preco)
+    Produto construtor_produto(int id, char nome[], char uniMedida[], char ingredientes[50], float preco)
     {
         Produto novo;
         novo.id = id;
-        novo.nome = nome;
-        novo.uniMedida = uniMedida;
-        novo.
+        strcpy(novo.nome,nome);
+        strcpy(novo.uniMedida,uniMedida);
+        strcpy(novo.ingredientes, ingredientes);
+        novo.preco = preco;
         
-    }
-    
+    } 
 
     typedef struct Cliente
     {
@@ -64,6 +64,36 @@
         strcpy(novo.telefone,telefone);
         strcpy(novo.email,email);
         strcpy(novo.endereco,endereco);
+
+        return novo;
+    }
+
+    typedef struct Pedido
+    {
+        int id;
+        char id_cliente[50];
+        char id_produto[20];
+        char qtd_produto[10];
+        int preco_custo;
+        int preco_venda;
+        char data_entrega[12];
+        char status[20];
+
+    } Pedido;
+
+    Pedido construtor_pedido(int id, char id_cliente[], char id_produto[], char qtd_produto[], int preco_custo, int preco_venda, char data_entrega[], char status[]) {
+
+        Pedido novo;
+        novo.id = id;
+        strcpy(novo.id_cliente,id_cliente);
+        strcpy(novo.id_produto,id_produto);
+        strcpy(novo.qtd_produto,qtd_produto);
+        novo.preco_custo = preco_custo;
+        novo.preco_venda = preco_venda;
+        strcpy(novo.data_entrega,data_entrega);
+        strcpy(novo.status,status);
+
+        return novo;
     }
 
 
