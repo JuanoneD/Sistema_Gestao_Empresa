@@ -1,0 +1,18 @@
+CADASTRAR INGREDIENTES
+Nome do ingrediente e quantidade
+Função para add mais ingredientes no estoque (aos que já existem)
+
+CADASTRAR CLIENTE
+Informações do cliente
+Função para saber se já existe no banco de dados
+
+CADASTRAR PRODUTO
+Função para modificar a estrutura de um produto específico
+Try / Catch
+Pesquisar produto
+
+
+CADASTRAR PEDIDO
+Pesquisar pedido 
+Cancelar pedido 
+

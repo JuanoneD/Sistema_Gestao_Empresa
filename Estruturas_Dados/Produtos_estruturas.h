@@ -1,7 +1,7 @@
 #include "Estruturas.h"
 
-#ifndef Produtos_dados
-#define Produtos_dados
+#ifndef Produtos_estruturas
+#define Produtos_estruturas
 
 typedef struct Array_dinamico_produtos
 {
@@ -52,18 +52,8 @@ Produto * get_produto(Array_produtos * array, int index)
     return &array->array[index];
 }
 
-void deletar_produtos(Array_produtos * array, int id)
-{
-    int id = pesquisar_id(array, id);
-
-    swap(array,id, array->size);
-    array->size--;
-
-}
 
 // fazer o sort aq
-
-
 void swap(Array_produtos * array, int i, int j)
 {
 	Produto temp = array->array[i];
@@ -105,7 +95,7 @@ void organizar_array(Array_produtos * array)
     quick_sort(array, 0, array->size-1);
 }
 
-int pesquisar_id(Array_produtos * array, int id)
+int pesquisar_id_produto(Array_produtos * array, int id)
 {
     // organizar pelo id
     organizar_array(array);
@@ -132,7 +122,7 @@ int pesquisar_id(Array_produtos * array, int id)
     return -1;
 }
 
-int ordem_alfabetica(Array_produtos * array, int begin, int end)
+int ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
 {
     
     if(end <= begin)
@@ -158,8 +148,8 @@ int ordem_alfabetica(Array_produtos * array, int begin, int end)
 		swap(array, i, j);
 	}
 	
-	ordem_alfabetica(array, begin, i - 1);
-	ordem_alfabetica(array, i + 1, end);
+	ordem_alfabetica_produto(array, begin, i - 1);
+	ordem_alfabetica_produto(array, i + 1, end);
 }
 
 
@@ -174,9 +164,11 @@ Produto * pesquisar_nome(Array_produtos * array, char nome[], int tamanho) {
 	}
 }
 
-void split_line_produtos(char *buffer,int *id,char *nome,char *quant,float *preco)
+void split_line_produtos(char *buffer, int *id, char *nome, char *uniMedida, char *ingredientes, float *preco)
 {
-    char new_id[20],name[100],quanti[20],new_preco[50];
+    char new_id[20], name[100], uniMed[20], ingred[50], new_preco[20];
+
+    //ID
     int i=0;
     while(*buffer && *buffer != '\t')
     {
@@ -186,6 +178,7 @@ void split_line_produtos(char *buffer,int *id,char *nome,char *quant,float *prec
     buffer++;
     *id = atoi(new_id);
 
+    // Nome
     i = 0;
     while(*buffer && *buffer !='\t')
     {
@@ -194,24 +187,36 @@ void split_line_produtos(char *buffer,int *id,char *nome,char *quant,float *prec
     name[i] = '\0';
     buffer++;
     strcpy(nome,name);
-
-    i=0;
+    
+    // Unidade de Medida
+    i = 0;
     while(*buffer&&*buffer !='\t')
     {
-        quanti[i++] = *buffer++;
+        uniMed[i++] = *buffer++;
     }
-    quanti[i] = '\0';
+    uniMed[i] = '\0';
     buffer++;
-    strcpy(quant,quanti);
+    strcpy(uniMedida,uniMed);
 
-    i=0;
+    // Ingredientes
+    i = 0;
+    while (*buffer && *buffer!='\t')
+    {
+        ingred[i++] = *buffer++;
+    }
+    ingred[i]='\0';
+    strcpy(ingredientes,ingred);
+    
+    // Preço
+    i = 0;
     while (*buffer && *buffer!='\t')
     {
         new_preco[i++] = *buffer++;
     }
     new_preco[i]='\0';
+
     *preco = atof(new_preco);
-    
+
 }
 
 // Começar a ver daqui
@@ -219,25 +224,28 @@ void get_tsv_produto(Array_produtos * array, char arquivo[])
 {
     int id;
     float preco;
-    char buffer[1000], nome[100], quant[100];// continuar a partir daqui 
+    char buffer[1000], nome[100], uniMed[100], ingred[100];
     FILE * arq = fopen(arquivo,"r");
     if(!arq) return;
     fgets(buffer,999,arq);
     while (fgets(buffer,999,arq))
     {
-        split_line_produtos(buffer,&id,nome,quant,&preco);
-        add_produto(array,id, nome, uniMedida, preco);
+        split_line_produtos(buffer,&id, nome,uniMed,ingred, &preco);
+        add_produto(array, id, nome, uniMed, ingred, preco);
     }
     fclose(arq);
 }
-void set_tsv_produtos(Array_produtos * array,char arquivo[])
+
+
+void set_tsv_produtos(Array_produtos * array, char arquivo[])
 {
     FILE *arq = fopen(arquivo,"w");
-    fprintf(arq,"ID\tNOME\tQTD\tPREÇO\n");
+    fprintf(arq,"ID\tNOME\tUNI_MEDIDA\tINGREDIENTES\tPREÇO\n");
+
     for(int i=0;i<array->size;i++)
     {
-        Produto * ingre = get_produto(array, i);
-        fprintf(arq,"%i\t%s\t%s\t%f\n",ingre->id,ingre->nome,ingre->un_medida,ingre->preco);
+        Produto * produto = get_produto(array, i);
+        fprintf(arq,"%i\t%s\t%s\t%s\t%f\n",produto->id, produto->nome, produto->uniMedida, produto->ingredientes,produto->preco);
     }
     fclose(arq);
 }
@@ -246,6 +254,14 @@ void destruir_array_produtos(Array_produtos * array)
 {
     free(array->array);
     free(array);
+}
+
+void deletar_produtos(Array_produtos * array, int id)
+{
+    int i = pesquisar_id_produto(array, id);
+
+    swap(array, i, array->size-1);
+    array->size--;
 }
 
 #endif 

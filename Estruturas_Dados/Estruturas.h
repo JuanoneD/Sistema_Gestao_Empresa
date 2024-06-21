@@ -9,16 +9,16 @@
     {
         int id;
         char nome[50];
-        char un_medida[50];
+        int qta;
         float preco;
     }Ingrediente;
 
-    Ingrediente construtor_ingrediente(int id,char name[],char un_med[],float preco)
+    Ingrediente construtor_ingrediente(int id,char name[],int qta,float preco)
     {
         Ingrediente novo;
         novo.id = id;
         strcpy(novo.nome,name);
-        strcpy(novo.un_medida,un_med);
+        novo.qta = qta;
         novo.preco = preco;
         return novo;
     }
@@ -33,7 +33,7 @@
         
     } Produto;
 
-    Produto construtor_produto(int id, char nome[], char uniMedida[], char ingredientes[50], float preco)
+    Produto construtor_produto(int id, char nome[], char uniMedida[], char ingredientes[], float preco)
     {
         Produto novo;
         novo.id = id;
@@ -41,7 +41,7 @@
         strcpy(novo.uniMedida,uniMedida);
         strcpy(novo.ingredientes, ingredientes);
         novo.preco = preco;
-        
+        return novo;
     } 
 
     typedef struct Cliente
@@ -81,8 +81,8 @@
 
     } Pedido;
 
-    Pedido construtor_pedido(int id, char id_cliente[], char id_produto[], char qtd_produto[], int preco_custo, int preco_venda, char data_entrega[], char status[]) {
-
+    Pedido construtor_pedido(int id, char id_cliente[], char id_produto[], char qtd_produto[], int preco_custo, int preco_venda, char data_entrega[], char status[]) 
+    {
         Pedido novo;
         novo.id = id;
         strcpy(novo.id_cliente,id_cliente);

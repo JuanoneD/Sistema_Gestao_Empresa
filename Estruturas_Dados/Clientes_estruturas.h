@@ -1,7 +1,7 @@
 #include "Estruturas.h"
 
-#ifndef Clientes_dados
-#define Clientes_dados
+#ifndef Clientes_estruturas
+#define Clientes_estruturas
 
 typedef struct Array_dinamico_cliente
 {
@@ -130,7 +130,7 @@ void organizar_array_decrescente(Array_cliente * array)
 }
 
 //Função que ordena a lista de clientes em ordem alfabética
-void ordem_alfabetica(Array_cliente * array, int begin, int end) {
+void ordem_alfabetica_cliente(Array_cliente * array, int begin, int end) {
 
     if(end <= begin)
 	{
@@ -155,8 +155,8 @@ void ordem_alfabetica(Array_cliente * array, int begin, int end) {
 		swap(array, i, j);
 	}
 	
-	ordem_alfabetica(array, begin, i - 1);
-	ordem_alfabetica(array, i + 1, end);
+	ordem_alfabetica_cliente(array, begin, i - 1);
+	ordem_alfabetica_cliente(array, i + 1, end);
 }
 
 
@@ -172,7 +172,7 @@ Cliente * pesquisar_nome(Array_cliente * array, char nome[], int tamanho) {
 	}
 }
 
-int pesquisar_id(Array_cliente *array,int id)
+int pesquisar_id_cliente(Array_cliente *array, int id)
 {
     // organizar pelo id
     int begin = 0;
@@ -203,75 +203,114 @@ int pesquisar_id(Array_cliente *array,int id)
 }
 
 
-
-
 //alterar informações
-
-
-void split_line_cliente(char *buffer,int *id,char *nome,char *quant,float *preco)
+void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char * telefone, char * email, char * endereco)
 {
-    char new_id[20],name[100],quanti[20],new_preco[50];
-    int i=0;
+    char new_id[20], new_nome[100], new_cpf[20], new_telefone[30], new_email[60], new_endereco[60];
+    
+    int i = 0;
     while(*buffer && *buffer != '\t')
     {
         new_id[i++] = *buffer++;
     }
+
     new_id[i] = '\0';
     buffer++;
     *id = atoi(new_id);
 
     i = 0;
-    while(*buffer && *buffer !='\t')
+    while(*buffer && *buffer != '\t')
     {
-        name[i++] = *buffer++;
+        new_nome[i++] = *buffer++;
     }
-    name[i] = '\0';
-    buffer++;
-    strcpy(nome,name);
 
-    i=0;
-    while(*buffer&&*buffer !='\t')
-    {
-        quanti[i++] = *buffer++;
-    }
-    quanti[i] = '\0';
+    new_nome[i] = '\0';
     buffer++;
-    strcpy(quant,quanti);
+    strcpy(nome,new_nome);
 
-    i=0;
-    while (*buffer && *buffer!='\t')
+    i = 0;
+    while(*buffer && *buffer != '\t')
     {
-        new_preco[i++] = *buffer++;
+        new_cpf[i++] = *buffer++;
     }
-    new_preco[i]='\0';
-    *preco = atof(new_preco);
+
+    new_cpf[i] = '\0';
+    buffer++;
+    strcpy(cpf,new_cpf);
+
+    i = 0;
+    while(*buffer && *buffer != '\t')
+    {
+        new_telefone[i++] = *buffer++;
+    }
+
+    new_telefone[i] = '\0';
+    buffer++;
+    strcpy(telefone,new_telefone);
+
+    i = 0;
+    while(*buffer && *buffer != '\t')
+    {
+        new_email[i++] = *buffer++;
+    }
+
+    new_email[i] = '\0';
+    buffer++;
+    strcpy(email,new_email);
+
+    i = 0;
+    while(*buffer && *buffer != '\t')
+    {
+        new_endereco[i++] = *buffer++;
+    }
+
+    new_endereco[i] = '\0';
+    buffer++;
+    strcpy(endereco,new_endereco);
     
 }
-void get_tsv_cliente(Array_cliente * array,char arquivo[])
+
+void get_tsv_cliente(Array_cliente * array, char arquivo[])
 {
     int id;
-    float preco;
-    char buffer[1000],nome[100],quant[100];
-    FILE * arq = fopen(arquivo,"r");
+    char buffer[1000], nome[100], cpf[100], telefone[100], email[100], endereco[100];
+
+    FILE * arq = fopen(arquivo, "r");
     if(!arq) return;
     fgets(buffer,999,arq);
+
     while (fgets(buffer,999,arq))
     {
-        split_line_cliente(buffer,&id,nome,quant,&preco);
-        add_cliente(array,id,nome,quant,preco);
+        split_line_cliente(buffer, &id, nome, cpf, telefone, email, endereco);
+        add_cliente(array, id, nome, cpf, telefone, email, endereco);
     }
+
     fclose(arq);
 }
-void set_tsv_cliente(Array_cliente * array,char arquivo[])
+
+void set_tsv_cliente(Array_cliente * array, char arquivo[])
 {
-    FILE *arq = fopen(arquivo,"w");
-    fprintf(arq,"ID\tNOME\tQTD\tPREÇO\n");
+    organizar_array(array);
+
+    FILE * arq = fopen(arquivo, "w");
+    fprintf(arq,"ID\tNOME\tCPF\tTELEFONE\tEMAIL\tENDERECO\n");
+
     for(int i=0;i<array->size;i++)
     {
-        Cliente * ingre = get_cliente(array,i);
-        fprintf(arq,"%i\t%s\t%s\t%f\n",ingre->id,ingre->nome,ingre->un_medida,ingre->preco);
+        Cliente * cliente = get_cliente(array, i);
+        fprintf(arq,"%i\t%s\t%s\t%s\t%s\t%s\n", cliente->id, cliente->nome, cliente->cpf, cliente->telefone, cliente->email, cliente->endereco);
     }
+
     fclose(arq);
+}
+
+void deletar_produtos(Array_cliente * array, int id)
+{
+    int i = pesquisar_id_cliente(array, id);
+
+    swap(array, i, array->size-1);
+    array->size--;
+
 }
 
 void destruir_array_cliente(Array_cliente * array)
