@@ -74,14 +74,14 @@
         char id_cliente[50];
         char id_produto[20];
         char qtd_produto[10];
-        int preco_custo;
-        int preco_venda;
+        float preco_custo;
+        float preco_venda;
         char data_entrega[12];
         char status[20];
 
     } Pedido;
 
-    Pedido construtor_pedido(int id, char id_cliente[], char id_produto[], char qtd_produto[], int preco_custo, int preco_venda, char data_entrega[], char status[]) 
+    Pedido construtor_pedido(int id, char id_cliente[], char id_produto[], char qtd_produto[], float preco_custo, float preco_venda, char data_entrega[], char status[]) 
     {
         Pedido novo;
         novo.id = id;
@@ -95,10 +95,6 @@
 
         return novo;
     }
-
-
-    
-
 
 #endif
 
