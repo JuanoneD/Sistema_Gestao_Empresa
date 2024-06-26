@@ -1,22 +1,24 @@
 #include "Estruturas_Dados\Ingredientes_estruturas.h"
+#include "Estruturas_Dados\Pedidos_estruturas.h"
 
 int main()
 {
-    Array_ingrediente * ingredientes = construtor_array_ingrediente();
-    get_tsv_ingrediente(ingredientes,"ingrediente.tsv");
-    add_ingrediente(ingredientes, 0, "jao", 30, 30);
-    add_ingrediente(ingredientes, 1, "bolo", 40, 40);
-    add_ingrediente(ingredientes, 2, "cenora", 30, 30);
-    int i = pesquisar_id_ingrediente(ingredientes, 2);
-    printf("\n%i",i);
-    organizar_array_qta(ingredientes);
-    for(int j = 0; j < get_size_ingrediente(ingredientes); j++)
+    int id = 1;
+    Array_pedidos * array = construtor_array_pedidos();
+    get_tsv_pedido(array,"pedido.tsv");
+
+    Pedido * ped = get_pedido(array,array->size-1);
+    if (ped) id = ped->id+1;
+
+    _add_pedido(array,id++,"JAO","23,24","23,24",23,24.6,"23/23/2323","OK");
+    _add_pedido(array,id++,"JAO","23,24","23,24",23,24.6,"23/23/2323","OK");
+
+    printf("\n%i\n",array->size);
+    for(int i=0;i<array->size;i++)
     {
-        Ingrediente * in = get_ingrediente(ingredientes,j);
-        printf("\n%i",in->qta);
+        ped = get_pedido(array,i);
+        printf("\n%i\t%s\t%s\t%s\t%f\t%f\t%s\t%s\n",ped->id,ped->id_cliente,ped->id_produto,ped->qtd_produto,ped->preco_custo,ped->preco_venda,ped->data_entrega,ped->status);
     }
-    organizar_array_asc(ingredientes);
-    set_tsv_ingrediente(ingredientes,"ingrediente.tsv");
-    destruir_array_ingrediente(ingredientes);
+    set_tsv_produto(array,"pedido.tsv");
 
 }
