@@ -22,7 +22,7 @@ Array_cliente * construtor_array_cliente()
 }
 
 //Função para adicionar um cliente ao banco de dados
-void add_cliente(Array_cliente * array, int id, char nome[], char cpf[], char telefone[], char email[], char endereco[]) 
+void _add_cliente(Array_cliente * array, int id, char nome[], char cpf[], char telefone[], char email[], char endereco[]) 
 {
     Cliente novo_cliente = construtor_cliente(id, nome, cpf, telefone, email, endereco);
 
@@ -161,9 +161,9 @@ void ordem_alfabetica_cliente(Array_cliente * array, int begin, int end) {
 
 
 
-Cliente * pesquisar_nome(Array_cliente * array, char nome[], int tamanho) {
+Cliente * pesquisar_nome_cliente(Array_cliente * array, char nome[]) {
 
-    for(int i = 0; i < tamanho; i++)
+    for(int i = 0; i < array->size; i++)
 	{
         if(strcmp(array->array[i].nome, nome) == 0) {
 
@@ -174,6 +174,8 @@ Cliente * pesquisar_nome(Array_cliente * array, char nome[], int tamanho) {
 
 int pesquisar_id_cliente(Array_cliente *array, int id)
 {
+    organizar_array(array);
+
     // organizar pelo id
     int begin = 0;
     int end = array->size - 1;
@@ -304,7 +306,7 @@ void set_tsv_cliente(Array_cliente * array, char arquivo[])
     fclose(arq);
 }
 
-void deletar_produtos(Array_cliente * array, int id)
+void _deletar_clientes(Array_cliente * array, int id)
 {
     int i = pesquisar_id_cliente(array, id);
 
