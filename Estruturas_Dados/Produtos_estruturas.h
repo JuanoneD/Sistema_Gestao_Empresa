@@ -21,7 +21,7 @@ Array_produtos * construtor_array_produtos()
     return novo;
 }
 
-void add_produto(Array_produtos * array, int id, char nome[], char uniMedida[], char ingredientes[], float preco)
+void _add_produto(Array_produtos * array, int id, char nome[], char uniMedida[], char ingredientes[], float preco)
 {
     Produto novo_produto = construtor_produto(id,nome,uniMedida,ingredientes,preco);
 
@@ -95,7 +95,7 @@ void organizar_array(Array_produtos * array)
     quick_sort(array, 0, array->size-1);
 }
 
-int pesquisar_id_produto(Array_produtos * array, int id)
+int _pesquisar_id_produto(Array_produtos * array, int id)
 {
     // organizar pelo id
     organizar_array(array);
@@ -122,7 +122,7 @@ int pesquisar_id_produto(Array_produtos * array, int id)
     return -1;
 }
 
-int ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
+int _ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
 {
     
     if(end <= begin)
@@ -148,14 +148,14 @@ int ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
 		swap(array, i, j);
 	}
 	
-	ordem_alfabetica_produto(array, begin, i - 1);
-	ordem_alfabetica_produto(array, i + 1, end);
+	_ordem_alfabetica_produto(array, begin, i - 1);
+	_ordem_alfabetica_produto(array, i + 1, end);
 }
 
 
-Produto * pesquisar_nome(Array_produtos * array, char nome[], int tamanho) {
+Produto * _pesquisar_nome_produto(Array_produtos * array, char nome[]) {
 
-    for(int i = 0; i < tamanho; i++)
+    for(int i = 0; i < array->size; i++)
 	{
         if(strcmp(array->array[i].nome, nome) == 0) {
 
@@ -231,7 +231,7 @@ void get_tsv_produto(Array_produtos * array, char arquivo[])
     while (fgets(buffer,999,arq))
     {
         split_line_produtos(buffer,&id, nome,uniMed,ingred, &preco);
-        add_produto(array, id, nome, uniMed, ingred, preco);
+        _add_produto(array, id, nome, uniMed, ingred, preco);
     }
     fclose(arq);
 }
@@ -256,9 +256,13 @@ void destruir_array_produtos(Array_produtos * array)
     free(array);
 }
 
-void deletar_produtos(Array_produtos * array, int id)
+void _deletar_produtos(Array_produtos * array, int id)
 {
-    int i = pesquisar_id_produto(array, id);
+    int i = _pesquisar_id_produto(array, id);
+
+    if (i < 0) {
+        return;
+    }
 
     swap(array, i, array->size-1);
     array->size--;
