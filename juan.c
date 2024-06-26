@@ -17,7 +17,7 @@ int main()
     for(int i=0;i<array->size;i++)
     {
         ped = get_pedido(array,i);
-        printf("\n%i\t%s\t%s\t%s\t%f\t%f\t%s\t%s\n",ped->id,ped->id_cliente,ped->id_produto,ped->qtd_produto,ped->preco_custo,ped->preco_venda,ped->data_entrega,ped->status);
+        printf("%i\t%s\t%s\t%s\t%f\t%f\t%s\t%s\n",ped->id,ped->id_cliente,ped->id_produto,ped->qtd_produto,ped->preco_custo,ped->preco_venda,ped->data_entrega,ped->status);
     }
     set_tsv_produto(array,"pedido.tsv");
 
