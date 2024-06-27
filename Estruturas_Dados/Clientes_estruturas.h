@@ -45,7 +45,7 @@ void _add_cliente(Array_cliente * array, int id, char nome[], char cpf[], char t
 //Função que retorna o cliente através do índice do array
 Cliente * get_cliente(Array_cliente *array, int index)
 {
-    if(index >= array->size)
+    if(index >= array->size || index < 0)
     {
         return NULL;
     }
@@ -73,13 +73,13 @@ void _quick_sort(Array_cliente * v, int begin, int end)
 	
 	while(i != j)
 	{
-		while(j > i && v->array[j].id >= v->array[j].id)
+		while(j > i && v->array[j].id >= v->array[i].id)
 		{
 			j--;
 		}
 		swap(v, i, j);
 		
-		while(i < j && v->array[j].id <= v->array[j].id)
+		while(i < j && v->array[i].id <= v->array[j].id)
 		{
 			i++;
 		}
@@ -107,13 +107,13 @@ void ordem_decrescente(Array_cliente * v, int begin, int end)
 	
 	while(i != j)
 	{
-		while(j > i && v->array[j].id <= v->array[j].id)
+		while(j > i && v->array[j].id <= v->array[i].id)
 		{
 			j--;
 		}
 		swap(v, i, j);
 		
-		while(i < j && v->array[j].id >= v->array[j].id)
+		while(i < j && v->array[i].id >= v->array[j].id)
 		{
 			i++;
 		}
@@ -170,6 +170,8 @@ Cliente * pesquisar_nome_cliente(Array_cliente * array, char nome[]) {
             return &array->array[i];
         }
 	}
+
+    return NULL;
 }
 
 int pesquisar_id_cliente(Array_cliente *array, int id)
@@ -261,7 +263,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     strcpy(email,new_email);
 
     i = 0;
-    while(*buffer && *buffer != '\t')
+    while(*buffer && *buffer != '\n')
     {
         new_endereco[i++] = *buffer++;
     }
@@ -284,7 +286,7 @@ void get_tsv_cliente(Array_cliente * array, char arquivo[])
     while (fgets(buffer,999,arq))
     {
         split_line_cliente(buffer, &id, nome, cpf, telefone, email, endereco);
-        add_cliente(array, id, nome, cpf, telefone, email, endereco);
+        _add_cliente(array, id, nome, cpf, telefone, email, endereco);
     }
 
     fclose(arq);
