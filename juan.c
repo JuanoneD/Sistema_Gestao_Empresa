@@ -1,24 +1,47 @@
 #include "Estruturas_Dados\Ingredientes_estruturas.h"
 #include "Estruturas_Dados\Pedidos_estruturas.h"
+#include <ctype.h>
+
+int single_split(char ** buffer,char endpoint)
+{
+    char word[100];
+    int i=0;
+    while(**buffer || **buffer != endpoint)
+    {
+        word[i++] = **buffer++;
+
+    }
+    word[i] = '\0';
+    word[i+1] = **buffer++;
+    if(i >= 0) return atoi(word);
+    return -1;
+}
+
+int split_ids(char * buffer,int * array)
+{
+    int i = 0;
+    int size = 1;
+    int id = single_split(&buffer,',');
+    while(id > 0)
+    {
+        array =(int *)realloc(array,size++ * sizeof(int));
+        array[i++] = id;
+        single_split(&buffer,',');
+    }
+    return i;
+}
 
 int main()
 {
-    int id = 1;
-    Array_pedidos * array = construtor_array_pedidos();
-    get_tsv_pedido(array,"pedido.tsv");
+    char word[] = "23,23,23,";
+    int * array = malloc(sizeof(int));
 
-    Pedido * ped = get_pedido(array,array->size-1);
-    if (ped) id = ped->id+1;
+    int size = split_ids(word,array);
 
-    _add_pedido(array,id++,"JAO","23,24","23,24",23,24.6,"23/23/2323","OK");
-    _add_pedido(array,id++,"JAO","23,24","23,24",23,24.6,"23/23/2323","OK");
-
-    printf("\n%i\n",array->size);
-    for(int i=0;i<array->size;i++)
+    for(int i =0;i<size;i++)
     {
-        ped = get_pedido(array,i);
-        printf("%i\t%s\t%s\t%s\t%f\t%f\t%s\t%s\n",ped->id,ped->id_cliente,ped->id_produto,ped->qtd_produto,ped->preco_custo,ped->preco_venda,ped->data_entrega,ped->status);
+        printf("%i ",array[i]);
     }
-    set_tsv_produto(array,"pedido.tsv");
 
+    
 }

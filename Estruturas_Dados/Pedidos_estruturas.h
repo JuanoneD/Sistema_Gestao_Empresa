@@ -177,7 +177,7 @@
         strcpy(data_entrega,temp);
 
         i=0;
-        while(*buffer && *buffer != '\t')
+        while(*buffer && *buffer != '\n')
         {
             temp[i++] = *buffer++;
         }

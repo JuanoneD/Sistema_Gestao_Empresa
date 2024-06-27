@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Aluno/Desktop/sistema_gestao_Empresa",
-      "program": "c:/Users/Aluno/Desktop/sistema_gestao_Empresa/build/Debug/outDebug",
+      "cwd": "c:/Users/Aluno/Desktop/sistema_gestao_empresa",
+      "program": "c:/Users/Aluno/Desktop/sistema_gestao_empresa/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
