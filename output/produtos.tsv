@@ -1,10 +1,4 @@
 ID	NOME	UNI_MEDIDA	INGREDIENTES	PREÇO
-0	Bolo de cenoura	1kg	1,2	0.000000
-0	Bolo de cenoura	1kg	1,2	0.000000
-0	Bolo de cenoura	1kg	1,2	30.000000
-1	Bolinho de cenoura	500g	1,2	0.000000
-1	Bolinho de cenoura	500g	1,2	0.000000
-1	Bolinho de cenoura	500g	1,2	15.000000
-2	Bolo de  com cholate	1kg	1,2	0.000000
-2	Bolo de  com cholate	1kg	1,2	0.000000
-2	Bolo de  com cholate	1kg	1,2	35.000000
+3	Bolo de cenoura	1kg	10,20,40,45	0.000000
+1	bolo	1kg	12,25,23	0.000000
+2	bolo de laranja	1kg	20,10,13	0.000000
