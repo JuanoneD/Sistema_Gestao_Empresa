@@ -1,85 +1,108 @@
-#include "Produtos_estruturas.h"
+#include "..\Estruturas_Dados\Produtos_estruturas.h"
 #include <ctype.h>
 
 #ifndef Produtos_funcoes
 #define Produtos_funcoes
 
+// Funcao responsavel por mostrar as opçoes ao usuário
 int menu_produtos(){
-    printf("----------------------------------------");
-    printf("|------------- Produtos ---------------|");
-    printf("|------ 1 - Inserir novo produto ------|");
-    printf("|------ 2 - Remover um produto --------|");
-    printf("|------ 3 - Pesquisar um produto ------|");
-    printf("|------ 4 - Vizualizar produtos -------|");
-    printf("|------ 0 -  Sair ---------------------|");
-    printf("---------------------------------------");
+    printf("\n----------------------------------------");
+    printf("\n|------------- Produtos ---------------|");
+    printf("\n|------ 1 - Inserir novo produto ------|");
+    printf("\n|------ 2 - Remover um produto --------|");
+    printf("\n|------ 3 - Pesquisar um produto ------|");
+    printf("\n|------ 4 - Vizualizar produtos -------|");
+    printf("\n|------ 0 -  Sair ---------------------|");
+    printf("\n---------------------------------------\n");
+
+    int op;
+    printf("Opcao desejada: ");
+    scanf("%i", &op);
+
+    return op;
+
 }
 
-void adicionar_produto(Array_produtos * array, int id){
+// Todas as funções abaixo são responsáveis por executar as funcões da biblioteca Produtos_estruturas 
+// e serem funcoes secundárias 
+
+void adicionar_produto(Array_produtos * array, int id){ // funcao criada para a interação do usuario ao adicionar o produto 
     char nome[50];
-    char uniMedida[10];
-    char ingredientes[50];
+    char uniMedida[20];
+    char ingredientes[60];
     float preco;
 
+    printf("\n ------- Inserir novo Produto ---------");
     printf("\nNome do produto: ");
-    scanf("%s", &nome);
+    fflush(stdin);
+    gets(nome);
 
     printf("\nUnidade de medida: ");
-    scanf("%s", &uniMedida);
+    fflush(stdin);
+    gets(uniMedida);
 
     printf("\nIDs Ingredientes: ");
-    scanf("%s", &ingredientes);
+    fflush(stdin);
+    gets(ingredientes);
 
     printf("\nPreco: R$ ");
     scanf("%f", &preco);
-
+    
+    // Adiciona um produto a lista de produtos e no tsv , essa função de fato adiciona o produto
     _add_produto(array, id, nome, uniMedida, ingredientes, preco);
 
-    printf("O produto {%s} foi adicionado com sucesso!", nome);
+    printf("O produto '%s' foi adicionado com sucesso!", nome);
 }
 
-void deletar_produto(Array_produtos * array){
-    int id;
 
-    printf("\nDigite o Nome ou ID do produto: ");
-    scanf("%i", &id);
+void deletar_produto(Array_produtos * array){ // o usuário irá inserir o nome ou id do produto que deseja 
+    char prod[50];
 
-    Produto * produto = get_produto(array,_pesquisar_id_produto(array, id));
-
-    if(produto == NULL){
-        printf("Produto não encontrado!");
-
-        return;
+    printf("\nDigite o ID ou Nome do produto que deseja deletar: ");
+    fflush(stdin);
+    gets(prod);
+    Produto * produto;
+    
+    if (eh_numero(prod) == 1)
+    {
+        produto = get_produto(array,_pesquisar_id_produto(array, atoi(prod)));
+        
     }
-    else{
-        printf("Produto '{%s}' deletado!", produto->nome);
+    else
+    {
+        produto = _pesquisar_nome_produto(array,prod);
     }
 
-    _deletar_produtos(array, id);
+    if( produto == NULL)
+    {
+        printf("Produto não encontrado! ");
+    } 
+
+    _deletar_produtos(array, produto->id);
 
 }
 
 int eh_numero(char * buffer)
 {
-    while(*buffer && *buffer!='\0')
+    while(*buffer || *buffer != '\0')
     {
-        if(!isdigit(*buffer)) return 0;
+        if(isdigit(*buffer++) == 0) return 0;
     }
     return 1;
 }
 
 void pesquisar_produto(Array_produtos * array){
 
-    int id;
     char search[50];
 
     printf("----------- Pesquisar Produto -------------");
 
     printf("\nDigite o ID ou Nome do produto que deseja pesquisar: ");
-    scanf("%s", &search);
+    fflush(stdin);
+    gets(search);
     Produto * produto;
     
-    if (eh_numero(search))
+    if (eh_numero(search) == 1)
     {
         produto = get_produto(array,_pesquisar_id_produto(array, atoi(search)));
     }
@@ -105,15 +128,17 @@ void pesquisar_produto(Array_produtos * array){
 void visualizar_produtos(Array_produtos * array){
     int op;
 
-    printf("1 - Visulizar em ordem alfabética");
-    printf("2 - Visualizar em ordem de ID");
+    printf("\n1 - Visulizar em ordem alfabetica");
+    printf("\n2 - Visualizar em ordem de ID");
+
+    printf("\nOpcao: ");
     scanf("%i", &op);
 
 
     switch (op)
     {
     case 1:
-        _ordem_alfabetica_produto(array, 0, array->size);
+        _ordem_alfabetica_produto(array, 0, array->size-1);
         break;
     
     case 2:
@@ -121,20 +146,18 @@ void visualizar_produtos(Array_produtos * array){
         break;
     }
 
-    printf("--------- Lista de Produtos -------");
+    printf("\n--------- Lista de Produtos -------\n");
+    printf("\nID\t| NOME\t\t| INGREDIENTES\t\t| UNI MED\t\t|  PRECO");
 
     for (int i = 0; i < array->size; i++){
         Produto * produto = get_produto(array, i);
         
-        printf("ID    | NOME          | INGREDIENTES        | UNI MED      |  PRECO       ");
-        printf("\n%i\t\t", produto->id);
-        printf("%s\t\t", produto->nome);
+        printf("\n%i\t", produto->id);
+        printf(" %s\t\t", produto->nome);
         printf(" %s\t\t", produto->ingredientes);
-        printf("%s\t\t", produto->uniMedida);
-        printf("%i\t\t", produto->preco);         
+        printf(" %s\t\t", produto->uniMedida);
+        printf("%f\t\t", produto->preco);         
 
     }
 }
-
-
 #endif
