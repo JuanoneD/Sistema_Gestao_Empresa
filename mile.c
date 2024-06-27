@@ -1,20 +1,39 @@
-#include "Estruturas_Dados\Produtos_estruturas.h"
+#include "Funcoes_gerais\Produtos_funcoes.h"
 
 int main()
 {
-    Array_produtos *  produtos = construtor_array_produtos();
-    get_tsv_produto(produtos, "produtos.tsv");
-    add_produto(produtos, 0, "Bolo de cenoura", "1kg", "1,2", 30.00);
-    add_produto(produtos, 1, "Bolinho de cenoura", "500g", "1,2", 15.00);
-    add_produto(produtos, 2, "Bolo de  com cholate", "1kg", "1,2", 35.00);
-    printf("%s",produtos->array[2].nome);
 
-    int i = pesquisar_id_produto(produtos, 1);
-    printf("\n%i", i);
-    organizar_array(produtos);
-    organizar_array(produtos);
+    int op = 1;
+    Array_produtos * array = construtor_array_produtos();
+    get_tsv_produto(array,"produtos.tsv");
 
-   set_tsv_produtos(produtos, "produtos.tsv");
-   destruir_array_produtos(produtos);
-    
+    int id = 1;
+    Produto * prod = get_produto(array,array->size-1);
+    if (prod) id = prod->id + 1;
+
+    while(op != 0){
+        op = menu_produtos();
+
+        switch(op)
+        {
+        case 1:
+            adicionar_produto(array, id++);
+            break;
+        
+        case 2:
+            deletar_produto(array);
+            break;
+
+        case 3:
+            pesquisar_produto(array);
+            break;
+        
+        case 4:
+            visualizar_produtos(array);
+            break;
+        
+        }
+
+    }
+    set_tsv_produtos(array,"produtos.tsv");
 }

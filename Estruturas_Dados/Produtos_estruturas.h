@@ -122,12 +122,12 @@ int _pesquisar_id_produto(Array_produtos * array, int id)
     return -1;
 }
 
-int _ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
+void _ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
 {
     
     if(end <= begin)
 	{
-		return;
+		return ;
 	}
 	
 	int i = begin;
@@ -162,6 +162,7 @@ Produto * _pesquisar_nome_produto(Array_produtos * array, char nome[]) {
             return &array->array[i];
         }
 	}
+    return NULL;
 }
 
 void split_line_produtos(char *buffer, int *id, char *nome, char *uniMedida, char *ingredientes, float *preco)
