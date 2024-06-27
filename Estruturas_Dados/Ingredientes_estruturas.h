@@ -8,7 +8,8 @@ typedef struct Array_dinamico_ingrediente
     Ingrediente * array;
     int size;
     int capacity;
-}Array_ingrediente;
+
+} Array_ingrediente;
 
 Array_ingrediente * construtor_array_ingrediente()
 {
@@ -19,10 +20,11 @@ Array_ingrediente * construtor_array_ingrediente()
     return novo;
 }
 
-///addd
-void add_ingrediente(Array_ingrediente * array,int id,char name[],int un_md,float preco)
+//Função para adicionar um ingrediente na lista
+void _add_ingrediente(Array_ingrediente * array,int id,char name[],int un_md,float preco)
 {
     Ingrediente novo_ingrediente = construtor_ingrediente(id,name,un_md,preco);
+
     if(!array->array)
     {
         array->capacity = 2;
@@ -38,7 +40,7 @@ void add_ingrediente(Array_ingrediente * array,int id,char name[],int un_md,floa
     array->array[array->size++] = novo_ingrediente;
 }
 
-
+//Função para retornar um ingrediente pelo index
 Ingrediente * get_ingrediente(Array_ingrediente *array, int index)
 {
     if(index >= array->size || index < 0)
@@ -48,13 +50,13 @@ Ingrediente * get_ingrediente(Array_ingrediente *array, int index)
     return &array->array[index];
 }
 
+//Função para retornar o tamanho da lista de ingredientes
 int get_size_ingrediente(Array_ingrediente * array)
 {
     return array->size;
 }
 
-//// espaço para fazer sort
-
+// Ordenação 
 void swap(Array_ingrediente * array,int i,int j)
 {
 	Ingrediente temp = array->array[i];
@@ -163,6 +165,36 @@ void organizar_array_qta(Array_ingrediente * array)
     quick_sort_qta(array,0,array->size-1);
 }
 
+//Função que ordena a lista de ingredientes em ordem alfabética
+void ordem_alfabetica_ingrediente(Array_ingrediente * array, int begin, int end) {
+
+    if(end <= begin)
+	{
+		return;
+	}
+	
+	int i = begin;
+	int j = end;
+	
+	while(i != j)
+	{
+		while(j > i && strcmp(array->array[j].nome,array->array[i].nome) >= 0)
+		{
+			j--;
+		}
+		swap(array, i, j);
+		
+		while(i < j && strcmp(array->array[i].nome, array->array[j].nome) <= 0)
+		{
+			i++;
+		}
+		swap(array, i, j);
+	}
+	
+	ordem_alfabetica_ingrediente(array, begin, i - 1);
+	ordem_alfabetica_ingrediente(array, i + 1, end);
+}
+
 ///
 
 int pesquisar_id_ingrediente(Array_ingrediente *array,int id)
@@ -190,6 +222,19 @@ int pesquisar_id_ingrediente(Array_ingrediente *array,int id)
         }
     }
     return -1;
+}
+
+Ingrediente * pesquisar_nome_ingrediente(Array_ingrediente * array, char nome[]) {
+
+    for(int i = 0; i < array->size; i++)
+	{
+        if(strcmp(array->array[i].nome, nome) == 0) {
+
+            return &array->array[i];
+        }
+	}
+
+    return NULL;
 }
 
 void split_line_ingrediente(char *buffer,int *id,char *nome,int *qta,float *preco)
@@ -231,7 +276,7 @@ void split_line_ingrediente(char *buffer,int *id,char *nome,int *qta,float *prec
     *preco = atof(new_preco);
     
 }
-void deletar_ingrediente(Array_ingrediente * array, int id)
+void _deletar_ingrediente(Array_ingrediente * array, int id)
 {
     int i = pesquisar_id_ingrediente(array, id);
 

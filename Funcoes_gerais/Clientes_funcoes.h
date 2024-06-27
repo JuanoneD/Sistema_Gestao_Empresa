@@ -1,7 +1,19 @@
-#include "Clientes_estruturas.h"
+#include "..\Estruturas_Dados\Clientes_estruturas.h"
+#include <ctype.h>
+
+int e_numero(char * buffer)
+{
+    while(*buffer && *buffer!='\0')
+    {
+        if(isdigit(*buffer++)== 0) return 0;
+    }
+    return 1;
+}
 
 //Função que possui um menu com todas das funcionalidades da estrutura clientes
 int menu_clientes() {
+
+    int op = 0;
 
     printf("\n-----------------------------------------\n");
     printf("|-------------- Clientes ---------------|\n");
@@ -11,6 +23,17 @@ int menu_clientes() {
     printf("|----- 4 - Visualizar clientes ---------|\n");
     printf("------ 5 - Sair ------------------------|\n");
     printf("-----------------------------------------\n");
+
+    printf("\n\nDigite a opcao desejada: ");
+    scanf("%i", &op);
+
+    while(op <= 0 || op > 5) {
+        
+        printf("\n\nPor favor, digite uma opcao valida: ");
+        scanf("%i", &op);   
+    }
+
+    return op;
 
 }
 
@@ -25,19 +48,21 @@ void add_cliente(Array_cliente * array, int id) {
 
     printf("\n\n---------- CADASTRAR NOVO CLIENTE ----------");
     printf("\nNome: ");
-    scanf("%s", &nome);
+    fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
+    gets(nome);
 
     printf("\nCPF: ");
-    scanf("%s", &cpf);
+    scanf("%s", cpf);
 
     printf("\nTelefone: ");
-    scanf("%s", &telefone);
+    scanf("%s", telefone);
 
     printf("\nE-mail: ");
-    scanf("%s", &email);
+    scanf("%s", email);
 
     printf("\nEndereco: ");
-    scanf("%s", &endereco);
+    fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
+    gets(endereco);
 
     _add_cliente(array, id, nome, cpf, telefone, email, endereco);
 
@@ -52,7 +77,8 @@ void deletar_clientes(Array_cliente * array) {
 
     printf("\n\n---------- DELETAR CLIENTE ----------");
     printf("\nNome: ");
-    scanf("%s", &nome);
+    fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
+    gets(nome);
 
     Cliente * cliente = pesquisar_nome_cliente(array, nome);
 
@@ -71,20 +97,20 @@ void pesquisar_cliente(Array_cliente * array) {
 
     char search[100];
 
-    printf("----------- Pesquisar Cliente -------------");
+    printf("\n----------- Pesquisar Cliente -------------");
 
     printf("\nDigite o ID ou Nome do cliente que deseja pesquisar: ");
-    scanf("%s", &search);
+    scanf("%s", search);
 
     Cliente * cliente;
     
-    if (e_numero(search))
+    if (e_numero(search) == 1)
     {
-        cliente = get_produto(array,_pesquisar_id_produto(array, atoi(search)));
+        cliente = get_cliente(array, pesquisar_id_cliente(array, atoi(search)));
     }
     else
     {
-        cliente = _pesquisar_nome_produto(array,search);
+        cliente = pesquisar_nome_cliente(array,search);
     }
 
     if ( cliente == NULL)
@@ -101,57 +127,12 @@ void pesquisar_cliente(Array_cliente * array) {
         printf("\nE-mail: %s", cliente->email);
         printf("\nEndereco: %s", cliente->endereco);
     }
-
-    // printf("\n\nPesquisar por: \n");
-    // printf("1 - Nome \n");
-    // printf("2 - ID \n");
-
-    // int op;
-
-    // printf("\n\nDigite a opcao desejada: ");
-    // scanf("%i", &op);
-
-    // Cliente * cliente;
-
-    // switch (op)
-    // {
-    //     case 1:
-    //         char nome[50];
-    //         printf("\nNome: ");
-    //         scanf("%s", &nome);
-
-    //         cliente = get_cliente(array,pesquisar_nome_cliente(array, nome));
-    //         break;
-        
-    //     case 2:
-    //         int id;
-    //         printf("\nID: ");
-    //         scanf("%s", &id);
-
-    //         cliente = get_cliente(array,pesquisar_id_cliente(array, id));
-    //         break;
-    // }
-
-    // if(array->array == NULL || cliente == NULL ) 
-    // {
-
-    //     printf("Cliente nao encontrado.");
-    // }
-
-    // printf("\n\n---------- DADOS DO CLIENTE ----------");
-    // printf("\nID: %i", cliente->id);
-    // printf("\nNome: %s", cliente->nome);
-    // printf("\nCPF: %s", cliente->cpf);
-    // printf("\nTelefone: %s", cliente->telefone);
-    // printf("\nE-mail: %s", cliente->email);
-    // printf("\nEndereco: %s", cliente->endereco);
-
 }
 
 //Função para visualizar o array de clientes em ordem alfabética ou por id (crescente e decrescente)
 void visualizar_clientes(Array_cliente * array) {
     
-    printf("\n\nTipos de visualização: \n");
+    printf("\n\nTipos de visualizacao: \n");
     printf("1 - Ordem alfabetica \n");
     printf("2 - Ordem de ID \n");
 
@@ -163,7 +144,7 @@ void visualizar_clientes(Array_cliente * array) {
     switch (op)
     {
         case 1:
-            ordem_alfabetica_cliente(array, 0, array->size);
+            ordem_alfabetica_cliente(array, 0, array->size-1);
             break;
         
         case 2:
@@ -179,7 +160,7 @@ void visualizar_clientes(Array_cliente * array) {
 
     printf("\n\n---------- LISTA DE CLIENTES ----------");
 
-    for(int i = 0; i < array->size-1; i++) 
+    for(int i = 0; i < array->size; i++) 
     {
         Cliente * cliente = get_cliente(array, i);
         
@@ -193,12 +174,4 @@ void visualizar_clientes(Array_cliente * array) {
     }
 }
 
-int e_numero(char * buffer)
-{
-    while(*buffer && *buffer!='\0')
-    {
-        if(!isdigit(*buffer)) return 0;
-    }
-    return 1;
-}
 
