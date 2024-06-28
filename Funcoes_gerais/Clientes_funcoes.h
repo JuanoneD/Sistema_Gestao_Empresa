@@ -99,7 +99,7 @@ void pesquisar_cliente(Array_cliente * array) {
 
     printf("\n----------- Pesquisar Cliente -------------");
 
-    printf("\nDigite o ID ou Nome do cliente que deseja pesquisar: ");
+    printf("\nDigite o ID ou Nome do cliente: ");
     scanf("%s", search);
 
     Cliente * cliente;
