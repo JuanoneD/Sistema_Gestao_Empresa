@@ -12,6 +12,7 @@ int menu_produtos(){
     printf("\n|------ 2 - Remover um produto --------|");
     printf("\n|------ 3 - Pesquisar um produto ------|");
     printf("\n|------ 4 - Vizualizar produtos -------|");
+    printf("\n|------ 5 - Editar produto -------|");
     printf("\n|------ 0 -  Sair ---------------------|");
     printf("\n---------------------------------------\n");
 
@@ -91,7 +92,7 @@ int eh_numero(char * buffer)
     return 1;
 }
 
-void pesquisar_produto(Array_produtos * array){
+Produto * pesquisar_produto(Array_produtos * array){
 
     char search[50];
 
@@ -123,6 +124,8 @@ void pesquisar_produto(Array_produtos * array){
         printf("\nPreco:R$ %f", produto->preco);
 
     }
+
+    return produto;
 }
 
 void visualizar_produtos(Array_produtos * array){
@@ -159,5 +162,48 @@ void visualizar_produtos(Array_produtos * array){
         printf("%f\t\t", produto->preco);         
 
     }
+}
+
+void editar_produto(Array_produtos * array, int id){
+
+    printf("\n----------- Editar Produto -------------");
+    Produto * produto =  pesquisar_produto(array);
+   
+    if(pesquisar_produto != NULL)
+    {
+        printf("\n------ EDICAO DO PRODUTO ------");
+
+        printf("\nNome do produto: ");
+        fflush(stdin);
+        gets(produto->nome);
+
+        printf("\nUnidade de medida: ");
+        fflush(stdin);
+        gets(produto->uniMedida);
+
+        printf("\nIDs Ingredientes: ");
+        fflush(stdin);
+        gets(produto->ingredientes);
+
+        printf("\nPreco: R$ ");
+        scanf("%f", &produto->preco);
+    } 
+    else
+    {   int op;
+        printf("Digite 1 para adicionar um novo produto ou 0 para voltar ao menu principal: ");
+        scanf("%i", &op);
+
+        if (op == 1){
+            adicionar_produto(array, id);
+        }
+        else
+        {
+            menu_produtos();
+        }
+    }
+
+
+   
+
 }
 #endif
