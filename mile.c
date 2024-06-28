@@ -32,7 +32,11 @@ int main()
             visualizar_produtos(array);
             break;
         
+        case 5:
+            editar_produto(array, id);
+            break;
         }
+
 
     }
     set_tsv_produtos(array,"produtos.tsv");
