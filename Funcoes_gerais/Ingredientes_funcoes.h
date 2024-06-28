@@ -15,26 +15,28 @@ int menu_ingredientes() {
 
     int op = 0;
 
-    printf("\n-----------------------------------------\n");
-    printf("|------------ Ingredientes -------------|\n");
-    printf("|----- 1 - Adicionar ingrediente -------|\n");
-    printf("|----- 2 - Remover ingrediente ---------|\n");
-    printf("|----- 3 - Pesquisar ingrediente -------|\n");
-    printf("|----- 4 - Visualizar estoque ----------|\n");
-    printf("------ 5 - Sair ------------------------|\n");
-    printf("-----------------------------------------\n");
+    while(op == 0) {
 
-    printf("\n\nDigite a opcao desejada: ");
-    scanf("%i", &op);
+        printf("\n-----------------------------------------\n");
+        printf("|------------ Ingredientes -------------|\n");
+        printf("|----- 1 - Adicionar ingrediente -------|\n");
+        printf("|----- 2 - Remover ingrediente ---------|\n");
+        printf("|----- 3 - Pesquisar ingrediente -------|\n");
+        printf("|----- 4 - Editar ingrediente ----------|\n");
+        printf("|----- 5 - Visualizar estoque ----------|\n");
+        printf("------ 6 - Sair ------------------------|\n");
+        printf("-----------------------------------------\n");
 
-    while(op <= 0 || op > 5) {
-        
-        printf("\n\nPor favor, digite uma opcao valida: ");
-        scanf("%i", &op);   
+        printf("\n\nDigite a opcao desejada: ");
+        scanf("%i", &op);
+
+        if (op == 0 || op > 6) {
+            
+            printf("\nPor favor, digite uma opcao valida");
+        }
     }
 
     return op;
-
 }
 
 //Função para pesquisar um ingrediente pelo nome ou id
@@ -42,7 +44,7 @@ Ingrediente * pesquisar_ingrediente(Array_ingrediente * array) {
 
     char search[100];
 
-    printf("\n----------- PESQUISAR INGREDIENTE -------------");
+    printf("\n\n----------- PESQUISAR INGREDIENTE -------------");
 
     printf("\nDigite o ID ou Nome do ingrediente: ");
     scanf("%s", search);
@@ -81,6 +83,7 @@ void add_ingrediente(Array_ingrediente * array, int id) {
     int qta;
     float preco;
     int op;
+    int new_qta = 0;
 
     printf("\n\nOpcoes: \n");
     printf("1 - Adicionar novo ingrediente \n");
@@ -92,7 +95,7 @@ void add_ingrediente(Array_ingrediente * array, int id) {
     switch (op)
     {
         case 1:
-            printf("\n\n---------- CADASTRAR NOVO INGREDIENTE ----------");
+            printf("\n\n---------- ADICIONAR NOVO INGREDIENTE ----------");
             printf("\nNome: ");
             fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
             gets(nome);
@@ -110,35 +113,34 @@ void add_ingrediente(Array_ingrediente * array, int id) {
         
         case 2:
 
-            printf("\nAntes de editar, sera preciso verificar no estoque os dados do item.\n");
+            printf("\n\n----------- ACRESCENTAR INGREDIENTE -------------");
+            printf("\nAntes de acrescentar, sera preciso verificar o item no estoque\n");
 
             Ingrediente * ingrediente =  pesquisar_ingrediente(array);
-            
-            if(ingrediente == NULL) 
+        
+            if(pesquisar_ingrediente != NULL)
             {
-                printf("Digite 1 para adicionar novo ingrediente ou 0 para voltar ao menu principal");
+                printf("\n\nDigite a quantidade que sera adicionada: ");
+                scanf("%i", &new_qta);
+                ingrediente->qta = ingrediente->qta + new_qta;
+            } 
+            else
+            {   
+                printf("\nDigite 1 para adicionar um novo ingrediente ou 0 para voltar ao menu principal: ");
                 scanf("%i", &op);
 
-                if(op == 1) 
-                {
+                if (op == 1){
                     add_ingrediente(array, id);
                 }
-
-                else 
+                else
                 {
                     menu_ingredientes();
-                    break;
                 }
             }
-
-            else 
-            {
-                printf("\nDigite a quantidade que sera adicionada: ");
-                scanf("%i", &ingrediente->qta);
-                break;
-            }
+            break;
     }
 }
+
 
 //Função que remove um ingrediente do estoque
 void deletar_ingrediente(Array_ingrediente * array) {
@@ -193,7 +195,7 @@ void visualizar_ingredientes(Array_ingrediente * array) {
     if(array->array == NULL) 
     {
 
-        printf("O estoque de ingredientes esta vazio.");
+        printf("\n\nO estoque de ingredientes esta vazio.");
     }
 
     printf("\n\n---------- ESTOQUE DE INGREDIENTES ----------");
@@ -207,6 +209,40 @@ void visualizar_ingredientes(Array_ingrediente * array) {
         printf(" %s |", ingrediente->nome);
         printf(" %i |", ingrediente->qta);
         printf(" %f |", ingrediente->preco);
+    }
+}
+
+void editar_ingrediente(Array_ingrediente * array, int id){
+
+    printf("\n\n----------- EDITAR INGREDIENTE -------------");
+    printf("\nAntes de editar, sera preciso verificar o item no estoque\n");
+    
+    Ingrediente * ingrediente =  pesquisar_ingrediente(array);
+
+    if(pesquisar_ingrediente != NULL)
+    {
+        printf("\nNome do ingrediente: ");
+        fflush(stdin);
+        gets(ingrediente->nome);
+
+        printf("\nQuantidade: ");
+        scanf("%i", &ingrediente->qta);
+
+        printf("\nPreco: R$ ");
+        scanf("%f", &ingrediente->preco);
+    } 
+    else
+    {   int op;
+        printf("\nDigite 1 para adicionar um novo ingrediente ou 0 para voltar ao menu principal: ");
+        scanf("%i", &op);
+
+        if (op == 1){
+            add_ingrediente(array, id);
+        }
+        else
+        {
+            menu_ingredientes();
+        }
     }
 }
 

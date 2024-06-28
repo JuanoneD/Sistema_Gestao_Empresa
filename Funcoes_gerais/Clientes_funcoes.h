@@ -93,7 +93,7 @@ void deletar_clientes(Array_cliente * array) {
 }
 
 //Função para pesquisar um cliente pelo nome ou id
-void pesquisar_cliente(Array_cliente * array) {
+Cliente * pesquisar_cliente(Array_cliente * array) {
 
     char search[100];
 
@@ -127,6 +127,8 @@ void pesquisar_cliente(Array_cliente * array) {
         printf("\nE-mail: %s", cliente->email);
         printf("\nEndereco: %s", cliente->endereco);
     }
+
+    return cliente;
 }
 
 //Função para visualizar o array de clientes em ordem alfabética ou por id (crescente e decrescente)
@@ -173,5 +175,51 @@ void visualizar_clientes(Array_cliente * array) {
         printf(" %s |\n", cliente->endereco);
     }
 }
+
+void editar_cliente(Array_cliente * array, int id){
+
+    printf("\n\n----------- EDITAR cliente -------------");
+    printf("\nAntes de editar, sera preciso verificar o item no estoque\n");
+    
+    Cliente * cliente =  pesquisar_cliente(array);
+
+    if(pesquisar_cliente != NULL)
+    {
+        printf("\nNome: ");
+        fflush(stdin);
+        gets(cliente->nome);
+
+        printf("\nCPF: ");
+        fflush(stdin);
+        gets(cliente->cpf);
+
+        printf("\nTelefone: ");
+        fflush(stdin);
+        gets(cliente->telefone);
+
+        printf("\nEmail: ");
+        fflush(stdin);
+        gets(cliente->email);
+
+        printf("\nEndereco: ");
+        fflush(stdin);
+        gets(cliente->endereco);
+    } 
+    
+    else
+    {   int op;
+        printf("\nDigite 1 para adicionar um novo cliente ou 0 para voltar ao menu principal: ");
+        scanf("%i", &op);
+
+        if (op == 1){
+            add_cliente(array, id);
+        }
+        else
+        {
+            menu_clientes();
+        }
+    }
+}
+
 
 

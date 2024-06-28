@@ -201,9 +201,5 @@ void editar_produto(Array_produtos * array, int id){
             menu_produtos();
         }
     }
-
-
-   
-
 }
 #endif

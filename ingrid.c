@@ -4,7 +4,7 @@ int main() {
 
     int id = 1;
     Array_ingrediente * array = construtor_array_ingrediente();
-    get_tsv_ingrediente(array,"ingrediente.tsv");
+    get_tsv_ingrediente(array,"ingredientes.tsv");
 
     Ingrediente * ing = get_ingrediente(array,array->size-1);
     //id = (ing != NULL) ? ing->id: 1;
@@ -14,7 +14,6 @@ int main() {
 
     while (acabar == 0)
     {
-
         int op = menu_ingredientes();
 
         switch (op)
@@ -32,10 +31,14 @@ int main() {
                 break;
                 
             case 4:
-                visualizar_ingredientes(array);
+                editar_ingrediente(array, id++);
                 break;
             
             case 5:
+                visualizar_ingredientes(array);
+                break;
+
+            case 6:
                 acabar = 1;
                 break;
 
