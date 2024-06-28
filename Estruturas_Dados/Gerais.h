@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <ctype.h>
+=======
+>>>>>>> juan
 
 //Recebe um buffer == String e o endereço de array e adiciona os valores que existem no buffer no array e retorna o tamanho do array
 int split_ids(char * buffer,int ** array)
@@ -23,6 +26,7 @@ int split_ids(char * buffer,int ** array)
         (*array)[size++] = atoi(word);
     }
     return size;
+<<<<<<< HEAD
 }
 
 //Recebe um buffer e retorna 0 se não for um numero e 1 se for um numero
@@ -33,4 +37,6 @@ int eh_numero(char * buffer)
         if(isdigit(*buffer++) == 0) return 0;
     }
     return 1;
+=======
+>>>>>>> juan
 }

@@ -296,7 +296,7 @@ void get_tsv_ingrediente(Array_ingrediente * array, char arquivo[])
     while (fgets(buffer,999,arq))
     {
         split_line_ingrediente(buffer,&id,nome,&quant,&preco);
-        add_ingrediente(array,id,nome,quant,preco);
+        //add_ingrediente(array,id,nome,quant,preco);
     }
     fclose(arq);
 }
