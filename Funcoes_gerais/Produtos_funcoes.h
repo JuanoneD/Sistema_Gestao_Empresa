@@ -1,5 +1,6 @@
 #include "..\Estruturas_Dados\Produtos_estruturas.h"
 #include <ctype.h>
+#include "Ingredientes_funcoes.h"
 
 #ifndef Produtos_funcoes
 #define Produtos_funcoes
@@ -27,7 +28,7 @@ int menu_produtos(){
 // Todas as funções abaixo são responsáveis por executar as funcões da biblioteca Produtos_estruturas 
 // e serem funcoes secundárias 
 
-void adicionar_produto(Array_produtos * array, int id){ // funcao criada para a interação do usuario ao adicionar o produto 
+void adicionar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id){ // funcao criada para a interação do usuario ao adicionar o produto 
     char nome[50];
     char uniMedida[20];
     char ingredientes[60];
@@ -42,6 +43,7 @@ void adicionar_produto(Array_produtos * array, int id){ // funcao criada para a 
     fflush(stdin);
     gets(uniMedida);
 
+    visualizar_ingredientes(ingred_array);
     printf("\nIDs Ingredientes: ");
     fflush(stdin);
     gets(ingredientes);
@@ -92,7 +94,7 @@ int eh_numero(char * buffer)
     return 1;
 }
 
-Produto * pesquisar_produto(Array_produtos * array){
+Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_array){
 
     char search[50];
 
@@ -119,6 +121,14 @@ Produto * pesquisar_produto(Array_produtos * array){
     else 
     {
         printf("\nProduto: %s", produto->nome);
+
+        int *ids_ingredientes = malloc(sizeof(int));
+        int size = split_ids(produto->ingredientes, ids_ingredientes);
+
+        for(int i = 0; i < size; i++ ){
+            Ingrediente * ingrediente = get_ingrediente(ingred_array,pesquisar_id_ingrediente(ingred_array, ids_ingredientes[i]));
+            ids_ingredientes[i] = ingrediente->nome;
+        }
         printf("\nIngredientes: %s", produto->ingredientes);
         printf("\nUnidade de medida: %s", produto->uniMedida);
         printf("\nPreco:R$ %f", produto->preco);
@@ -164,10 +174,10 @@ void visualizar_produtos(Array_produtos * array){
     }
 }
 
-void editar_produto(Array_produtos * array, int id){
+void editar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id){
 
     printf("\n----------- Editar Produto -------------");
-    Produto * produto =  pesquisar_produto(array);
+    Produto * produto =  pesquisar_produto(array,ingred_array);
    
     if(pesquisar_produto != NULL)
     {
@@ -194,12 +204,16 @@ void editar_produto(Array_produtos * array, int id){
         scanf("%i", &op);
 
         if (op == 1){
-            adicionar_produto(array, id);
+            adicionar_produto(array, ingred_array, id);
         }
         else
         {
             menu_produtos();
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> milena
 }
 #endif
