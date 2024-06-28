@@ -1,6 +1,7 @@
 #include <..\Estruturas_Dados\Pedidos_estruturas.h>
 #include <Clientes_funcoes.h>
 #include <Produtos_funcoes.h>
+#include <..\Estruturas_Dados\Gerais.h>
 
 #ifndef Pedidos_funcoes
 #define Pedidos_funcoes
@@ -20,16 +21,6 @@ int single_split(char ** buffer,char endpoint)
     return -1;
 }
 
-void split_ids(char * buffer,int * array)
-{
-    int i = 0;
-    int size = 1;
-    while(int id = single_split(&buffer,',') > 0)
-    {
-        array =(int *)realloc(array,size++ * sizeof(int));
-        array[i++] = id;
-    }
-}
 
 void menu_pedido()
 {
@@ -60,7 +51,7 @@ void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos 
     else
     {
         visualizar_clientes(array_clie);
-        printf("Digite o id do cliente desejado,caso exista mais de um cliente separar por virgula:\n");
+        printf("Digite o id do cliente desejado:\n");
         scanf(" %s",new_client_id);
     }
 
@@ -77,13 +68,25 @@ void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos 
         printf("Digite o id do produto desejado,caso exista mais de um produto separar por virgula:\n");
         scanf(" %s",new_product_id);
     }
-    printf("Digite a quantidade do produto na mesma ordem separado por virgulas");
+    printf("Digite a quantidade do produto na mesma ordem separado por virgulas\n");
     scanf(" %s",qtd_produto);
 
+    int *ids =(int *)malloc(sizeof(int));
+    int size = split_ids(new_product_id,&ids);
+    int *prices = (int *)malloc(sizeof(int));
+    split_ids(qtd_produto,&prices);
+    float cust = 0;
+    for(int i=0;i<size;i++)
+    {
+        Produto * prod = get_produto(array_prod,_pesquisar_id_produto(array_prod,ids[i]));
+        cust += prod->preco * prices[i];
+    }
+    printf("O preco de custo foi: %.2f\n",cust);
+    printf("O preco de venda e %.2f\n",cust *1.75);
+    printf("Escreva a data de entrega dd/mm/aa");
+    scanf(" %s",data);
 
-
-
-
+    
 }
 
 #endif // 
