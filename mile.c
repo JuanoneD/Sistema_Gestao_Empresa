@@ -11,13 +11,16 @@ int main()
     Produto * prod = get_produto(array,array->size-1);
     if (prod) id = prod->id + 1;
 
+    Array_ingrediente * ingred_array = construtor_array_ingrediente();
+    get_tsv_ingrediente(ingred_array, "ingredientes.tsv");
+
     while(op != 0){
         op = menu_produtos();
 
         switch(op)
         {
         case 1:
-            adicionar_produto(array, id++);
+            adicionar_produto(array,ingred_array, id++);
             break;
         
         case 2:
@@ -25,7 +28,7 @@ int main()
             break;
 
         case 3:
-            pesquisar_produto(array);
+            pesquisar_produto(array, ingred_array);
             break;
         
         case 4:
@@ -33,7 +36,7 @@ int main()
             break;
         
         case 5:
-            editar_produto(array, id);
+            editar_produto(array, ingred_array, id);
             break;
         }
 
