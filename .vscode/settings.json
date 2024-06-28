@@ -59,6 +59,7 @@
   "files.associations": {
     "ingredientes_estruturas.h": "c",
     "clientes_estruturas.h": "c",
-    "clientes_funcoes.h": "c"
+    "clientes_funcoes.h": "c",
+    "pedidos_estruturas.h": "c"
   }
 }
