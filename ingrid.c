@@ -1,38 +1,38 @@
-#include "Funcoes_gerais\Clientes_funcoes.h"
+#include "Funcoes_gerais\Ingredientes_funcoes.h"
 
 int main() {
 
     int id = 1;
-    Array_cliente * array = construtor_array_cliente();
-    get_tsv_cliente(array,"clientes.tsv");
+    Array_ingrediente * array = construtor_array_ingrediente();
+    get_tsv_ingrediente(array,"ingrediente.tsv");
 
-    Cliente * cli = get_cliente(array,array->size-1);
-    //id = (cli != NULL) ? cli->id: 1;
-    if (cli != NULL) id = cli->id+1;
+    Ingrediente * ing = get_ingrediente(array,array->size-1);
+    //id = (ing != NULL) ? ing->id: 1;
+    if (ing != NULL) id = ing->id+1;
 
     int acabar = 0;
 
     while (acabar == 0)
     {
 
-        int op = menu_clientes();
+        int op = menu_ingredientes();
 
         switch (op)
         {
             case 1:
-                add_cliente(array, id++);
+                add_ingrediente(array, id++);
                 break;
 
             case 2:
-                deletar_clientes(array);
+                deletar_ingrediente(array);
                 break;
 
             case 3:
-                pesquisar_cliente(array);
+                pesquisar_ingrediente(array);
                 break;
                 
             case 4:
-                visualizar_clientes(array);
+                visualizar_ingredientes(array);
                 break;
             
             case 5:
@@ -41,7 +41,7 @@ int main() {
 
         }
 
-        set_tsv_cliente(array, "clientes.tsv");
+        set_tsv_ingrediente(array, "ingredientes.tsv");
 
     }
 }
@@ -61,23 +61,23 @@ int main() {
 
 
 
-// Array_cliente * newCliente = construtor_array_cliente();
+// Array_ingrediente * newingrediente = construtor_array_ingrediente();
 
-    // get_tsv_cliente(newCliente,"clientes.tsv");
-    // _add_cliente(newCliente, 1, "Ingrid", "1111111111", "333333333", "ingrid@email.com", "rua lalalalalalallalalalalalalalal");
-    // _add_cliente(newCliente, 2, "Mi", "2222211111", "333355553333", "mi@email.com", "rua lalalayaysysyfudyfudsuglalalalalal");
+    // get_tsv_ingrediente(newingrediente,"ingredientes.tsv");
+    // _add_ingrediente(newingrediente, 1, "Ingrid", "1111111111", "333333333", "ingrid@email.com", "rua lalalalalalallalalalalalalalal");
+    // _add_ingrediente(newingrediente, 2, "Mi", "2222211111", "333355553333", "mi@email.com", "rua lalalayaysysyfudyfudsuglalalalalal");
     
-    // int i = pesquisar_id_cliente(newCliente,1);
+    // int i = pesquisar_id_ingrediente(newingrediente,1);
     // printf("\n%i",i);
 
-    // ordem_alfabetica(newCliente, 0, newCliente->size-1);
+    // ordem_alfabetica(newingrediente, 0, newingrediente->size-1);
 
-    // for(int j = 0; j < newCliente->size-1; j++)
+    // for(int j = 0; j < newingrediente->size-1; j++)
     // {
-    //     Cliente * in = get_cliente(newCliente, j);
+    //     ingrediente * in = get_ingrediente(newingrediente, j);
     //     printf("\n%s",in->nome);
     // }
 
-    // ordem_alfabetica(newCliente, 0, newCliente->size-1);
-    // set_tsv_cliente(newCliente,"clientes.tsv");
-    // destruir_array_cliente(newCliente);
+    // ordem_alfabetica(newingrediente, 0, newingrediente->size-1);
+    // set_tsv_ingrediente(newingrediente,"ingredientes.tsv");
+    // destruir_array_ingrediente(newingrediente);

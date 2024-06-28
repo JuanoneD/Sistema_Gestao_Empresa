@@ -21,9 +21,9 @@ Array_ingrediente * construtor_array_ingrediente()
 }
 
 //Função para adicionar um ingrediente na lista
-void _add_ingrediente(Array_ingrediente * array,int id,char name[],int un_md,float preco)
+void _add_ingrediente(Array_ingrediente * array,int id,char name[],int qta,float preco)
 {
-    Ingrediente novo_ingrediente = construtor_ingrediente(id,name,un_md,preco);
+    Ingrediente novo_ingrediente = construtor_ingrediente(id,name,qta,preco);
 
     if(!array->array)
     {
@@ -296,7 +296,11 @@ void get_tsv_ingrediente(Array_ingrediente * array, char arquivo[])
     while (fgets(buffer,999,arq))
     {
         split_line_ingrediente(buffer,&id,nome,&quant,&preco);
+<<<<<<< HEAD
         //add_ingrediente(array,id,nome,quant,preco);
+=======
+        _add_ingrediente(array,id,nome,quant,preco);
+>>>>>>> ingrid
     }
     fclose(arq);
 }

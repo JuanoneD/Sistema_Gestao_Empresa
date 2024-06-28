@@ -10,7 +10,7 @@ int e_numero(char * buffer)
     return 1;
 }
 
-//Função que possui um menu com todas das funcionalidades da estrutura ingredientes
+//Função que possui um menu com todas as funcionalidades da estrutura ingredientes
 int menu_ingredientes() {
 
     int op = 0;
@@ -37,10 +37,46 @@ int menu_ingredientes() {
 
 }
 
+//Função para pesquisar um ingrediente pelo nome ou id
+Ingrediente * pesquisar_ingrediente(Array_ingrediente * array) {
+
+    char search[100];
+
+    printf("\n----------- PESQUISAR INGREDIENTE -------------");
+
+    printf("\nDigite o ID ou Nome do ingrediente: ");
+    scanf("%s", search);
+
+    Ingrediente * ingrediente;
+    
+    if (e_numero(search) == 1)
+    {
+        ingrediente = get_ingrediente(array, pesquisar_id_ingrediente(array, atoi(search)));
+    }
+    else
+    {
+        ingrediente = pesquisar_nome_ingrediente(array,search);
+    }
+
+    if ( ingrediente == NULL)
+    {
+        printf("ingrediente não encontrado! ");
+    } 
+    else 
+    {
+        printf("\n\n---------- DADOS DO INGREDIENTE ----------");
+        printf("\nID: %i", ingrediente->id);
+        printf("\nNome: %s", ingrediente->nome);
+        printf("\nQuantidade: %i", ingrediente->qta);       
+        printf("\nPreco: R$ %i", ingrediente->preco);    
+    }
+
+    return ingrediente;
+}
+
 //Função que adiciona um novo ingrediente ao estoque
 void add_ingrediente(Array_ingrediente * array, int id) {
 
-    int id;
     char nome[50];
     int qta;
     float preco;
@@ -65,7 +101,7 @@ void add_ingrediente(Array_ingrediente * array, int id) {
             scanf("%i", &qta);
 
             printf("\nPreco: ");
-            scanf("%i", &preco);
+            scanf("%f", &preco);
 
             _add_ingrediente(array, id, nome, qta, preco);
 
@@ -73,8 +109,34 @@ void add_ingrediente(Array_ingrediente * array, int id) {
             break;
         
         case 2:
+
+            printf("\nAntes de editar, sera preciso verificar no estoque os dados do item.\n");
+
+            Ingrediente * ingrediente =  pesquisar_ingrediente(array);
             
-            break;
+            if(ingrediente == NULL) 
+            {
+                printf("Digite 1 para adicionar novo ingrediente ou 0 para voltar ao menu principal");
+                scanf("%i", &op);
+
+                if(op == 1) 
+                {
+                    add_ingrediente(array, id);
+                }
+
+                else 
+                {
+                    menu_ingredientes();
+                    break;
+                }
+            }
+
+            else 
+            {
+                printf("\nDigite a quantidade que sera adicionada: ");
+                scanf("%i", &ingrediente->qta);
+                break;
+            }
     }
 }
 
@@ -98,41 +160,6 @@ void deletar_ingrediente(Array_ingrediente * array) {
 
     _deletar_ingrediente(array, ingrediente->id);
 
-}
-
-//Função para pesquisar um ingrediente pelo nome ou id
-void pesquisar_ingrediente(Array_ingrediente * array) {
-
-    char search[100];
-
-    printf("\n----------- Pesquisar ingrediente -------------");
-
-    printf("\nDigite o ID ou Nome do ingrediente que deseja pesquisar: ");
-    scanf("%s", search);
-
-    Ingrediente * ingrediente;
-    
-    if (e_numero(search) == 1)
-    {
-        ingrediente = get_ingrediente(array, pesquisar_id_ingrediente(array, atoi(search)));
-    }
-    else
-    {
-        ingrediente = pesquisar_nome_ingrediente(array,search);
-    }
-
-    if ( ingrediente == NULL)
-    {
-        printf("ingrediente não encontrado! ");
-    } 
-    else 
-    {
-        printf("\n\n---------- DADOS DO ingrediente ----------");
-        printf("\nID: %i", ingrediente->id);
-        printf("\nNome: %s", ingrediente->nome);
-        printf("\nQuantidade: %i", ingrediente->qta);       
-        printf("\nPreco: R$ %i", ingrediente->preco);       
-    }
 }
 
 //Função para visualizar o array de ingredientes em ordem alfabética ou por id (crescente e decrescente)
@@ -175,7 +202,7 @@ void visualizar_ingredientes(Array_ingrediente * array) {
     {
         Ingrediente * ingrediente = get_ingrediente(array, i);
         
-        printf("\n|  ID  |   NOME   |   CPF   | TELEFONE |  E-MAIL  | ENDERECO |\n");
+        printf("\n|  ID  |   NOME   |   QUANTIDADE   | PRECO |\n");
         printf("| %i |", ingrediente->id);
         printf(" %s |", ingrediente->nome);
         printf(" %i |", ingrediente->qta);
