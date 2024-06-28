@@ -1,6 +1,10 @@
-#include "Estruturas_Dados\Ingredientes_estruturas.h"
-#include "Estruturas_Dados\Pedidos_estruturas.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+<<<<<<< HEAD
 #include <ctype.h>
+=======
+>>>>>>> juan
 
 //Recebe um buffer == String e o endereço de array e adiciona os valores que existem no buffer no array e retorna o tamanho do array
 int split_ids(char * buffer,int ** array)
@@ -22,20 +26,17 @@ int split_ids(char * buffer,int ** array)
         (*array)[size++] = atoi(word);
     }
     return size;
+<<<<<<< HEAD
 }
 
-int main()
+//Recebe um buffer e retorna 0 se não for um numero e 1 se for um numero
+int eh_numero(char * buffer)
 {
-    char word[] = "23,23,23,23,23,23";
-    int * ids = malloc(sizeof(int));
-
-    int size = split_ids(word,&array);
-
-    for(int i =0;i<size;i++)
+    while(*buffer || *buffer != '\0')
     {
-        printf("%i ",pesquisar_id_ingrediente(ids[i]));
+        if(isdigit(*buffer++) == 0) return 0;
     }
-
-    free(array);
-    
+    return 1;
+=======
+>>>>>>> juan
 }
