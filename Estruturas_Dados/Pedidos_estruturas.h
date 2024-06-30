@@ -269,11 +269,9 @@ void destruir_array_pedidos(Array_pedidos *array)
 }
 
 //Função que remove o pedido do array
-void deletar_pedidos(Array_pedidos *array, int id)
+void deletar_pedidos(Array_pedidos *array, int index)
 {
-    int i = pesquisar_id_pedido(array, id);
-
-    swap_pedidos(array, i, array->size - 1);
+    swap_pedidos(array, index, array->size - 1);
     array->size--;
 }
 
