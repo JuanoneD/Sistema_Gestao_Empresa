@@ -55,7 +55,7 @@ Produto * get_produto(Array_produtos * array, int index)
 }
 
 // fazer o sort aq
-void swap(Array_produtos * array, int i, int j)
+void swap_produtos(Array_produtos * array, int i, int j)
 {
 	Produto temp = array->array[i];
 
@@ -81,14 +81,14 @@ void quick_sort(Array_produtos * v, int begin, int end)
 			j--;
 		}
 
-		swap(v, i, j);
+		swap_produtos(v, i, j);
 		
 		while(i < j && v->array[i].id <= v->array[j].id)
 		{
 			i++;
 		}
 
-		swap(v, i, j);
+		swap_produtos(v, i, j);
 	}
 	
 	quick_sort(v, begin, i - 1);
@@ -96,7 +96,7 @@ void quick_sort(Array_produtos * v, int begin, int end)
 }
 
 //Chama a função que organiza em ordem crescente
-void organizar_array(Array_produtos * array)
+void organizar_array_produtos(Array_produtos * array)
 {
     quick_sort(array, 0, array->size-1);
 }
@@ -105,7 +105,7 @@ void organizar_array(Array_produtos * array)
 int _pesquisar_id_produto(Array_produtos * array, int id)
 {
     // organizar pelo id
-    organizar_array(array);
+    organizar_array_produtos(array);
 
     int begin = 0;
     int end = array->size - 1;
@@ -152,14 +152,14 @@ void _ordem_alfabetica_produto(Array_produtos * array, int begin, int end)
 			j--;
 		}
 
-		swap(array, i, j);
+		swap_produtos(array, i, j);
 		
 		while(i < j && strcmp(array->array[i].nome, array->array[j].nome) <= 0)
 		{
 			i++;
 		}
 
-		swap(array, i, j);
+		swap_produtos(array, i, j);
 	}
 	
 	_ordem_alfabetica_produto(array, begin, i - 1);
@@ -298,7 +298,7 @@ void _deletar_produtos(Array_produtos * array, int id)
         return;
     }
 
-    swap(array, i, array->size-1);
+    swap_produtos(array, i, array->size-1);
     array->size--;
 }
 
