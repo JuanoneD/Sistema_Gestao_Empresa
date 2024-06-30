@@ -160,7 +160,7 @@ void add_ingrediente(Array_ingrediente * array, int id)
             if(pesquisar_ingrediente != NULL)
             {
                 printf("\n\nDigite a quantidade que sera adicionada: ");
-                scanf("%s", &search);
+                scanf(" %s", search);
 
                 //verifica se o valor digitado pelo usuario eh um numero
                 while(valido == 0) 

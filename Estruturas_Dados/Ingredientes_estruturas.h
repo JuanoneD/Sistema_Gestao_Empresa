@@ -61,7 +61,7 @@ int get_size_ingrediente(Array_ingrediente * array)
 }
 
 // Ordenação 
-void swap(Array_ingrediente * array,int i,int j)
+void swap_ingred(Array_ingrediente * array,int i,int j)
 {
 	Ingrediente temp = array->array[i];
 	array->array[i] = array->array[j];
@@ -86,14 +86,14 @@ void quick_sort_asc(Array_ingrediente * v, int begin, int end)
 			j--;
 		}
 
-		swap(v, i, j);
+		swap_ingred(v, i, j);
 		
 		while(i < j && v->array[i].id <= v->array[j].id)
 		{
 			i++;
 		}
 
-		swap(v, i, j);
+		swap_ingred(v, i, j);
 	}
 	
 	quick_sort_asc(v, begin, i - 1);
@@ -124,14 +124,14 @@ void quick_sort_dsc(Array_ingrediente * v, int begin, int end)
 			j--;
 		}
 
-		swap(v, i, j);
+		swap_ingred(v, i, j);
 		
 		while(i < j && v->array[i].id >= v->array[j].id)
 		{
 			i++;
 		}
 
-		swap(v, i, j);
+		swap_ingred(v, i, j);
 	}
 	
 	quick_sort_dsc(v, begin, i - 1);
@@ -162,14 +162,14 @@ void quick_sort_qta(Array_ingrediente * v, int begin, int end)
 			j--;
 		}
 
-		swap(v, i, j);
+		swap_ingred(v, i, j);
 		
 		while(i < j && v->array[i].qta <= v->array[j].qta)
 		{
 			i++;
 		}
 
-		swap(v, i, j);
+		swap_ingred(v, i, j);
 	}
 	
 	quick_sort_qta(v, begin, i - 1);
@@ -200,14 +200,14 @@ void ordem_alfabetica_ingrediente(Array_ingrediente * array, int begin, int end)
 			j--;
 		}
 
-		swap(array, i, j);
+		swap_ingred(array, i, j);
 		
 		while(i < j && strcmp(array->array[i].nome, array->array[j].nome) <= 0)
 		{
 			i++;
 		}
 
-		swap(array, i, j);
+		swap_ingred(array, i, j);
 	}
 	
 	ordem_alfabetica_ingrediente(array, begin, i - 1);
@@ -314,7 +314,7 @@ void _deletar_ingrediente(Array_ingrediente * array, int id)
 {
     int i = pesquisar_id_ingrediente(array, id);
 
-    swap(array, i, array->size-1);
+    swap_ingred(array, i, array->size-1);
     array->size--;
 }
 

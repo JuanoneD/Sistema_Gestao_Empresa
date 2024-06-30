@@ -99,16 +99,6 @@ void deletar_produto(Array_produtos * array)
 
 }
 
-//Função que verifica se a string digitada é um número
-int eh_numero(char * buffer)
-{
-    while(*buffer || *buffer != '\0')
-    {
-        if(isdigit(*buffer++) == 0) return 0;
-    }
-
-    return 1;
-}
 
 //Função para pesquisar um iproduto pelo nome ou id
 Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_array)
@@ -135,18 +125,19 @@ Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_a
     if( produto == NULL)
     {
         printf("Produto não encontrado! ");
+        return NULL;
     } 
     else 
     {
         printf("\nProduto: %s", produto->nome);
 
         int *ids_ingredientes = malloc(sizeof(int));
-        int size = split_ids(produto->ingredientes, ids_ingredientes);
+        int size = split_ids(produto->ingredientes,&ids_ingredientes);
 
         for(int i = 0; i < size; i++ )
         {
             Ingrediente * ingrediente = get_ingrediente(ingred_array,pesquisar_id_ingrediente(ingred_array, ids_ingredientes[i]));
-            ids_ingredientes[i] = ingrediente->nome;
+            printf(" %s,",ingrediente->nome);
         }
 
         printf("\nIngredientes: %s", produto->ingredientes);
