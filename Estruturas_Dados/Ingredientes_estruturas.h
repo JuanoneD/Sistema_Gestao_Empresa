@@ -1,4 +1,5 @@
 #include "Estruturas.h"
+
 #ifndef Ingredientes_estruturas
 #define Ingredientes_estruturas
 

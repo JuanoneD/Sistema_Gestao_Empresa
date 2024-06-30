@@ -10,18 +10,20 @@ int single_split(char ** buffer,char endpoint)
 {
     char word[100];
     int i=0;
+
     while(**buffer || **buffer != endpoint)
     {
         word[i++] = **buffer++;
-
     }
+
     word[i] = '\0';
     **buffer++;
     if(i >= 0) return atoi(word);
+
     return -1;
 }
 
-
+// Função que possui um menu com todas das funcionalidades da estrutura pedidos
 void menu_pedido()
 {
     printf("----------------------------------------");
@@ -35,6 +37,7 @@ void menu_pedido()
 
 }
 
+// Função que adiciona um novo pedido no array de pedidos
 void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod,int id_pedido,int *id_cliente,int *id_produto)
 {
     char new_client_id[100],new_product_id[100],qtd_produto[100],data[100],status[100];
@@ -43,6 +46,7 @@ void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos 
 
     printf("Selecionar:\n1 - Cliente existente\n2 - Criar novo cliente\n");
     scanf("%i",&menu);
+    
     if(menu == 2) 
     {
         add_cliente(array_clie,*id_cliente);
@@ -57,6 +61,7 @@ void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos 
 
     printf("Selecionar:\n1 - Produtos existentes\n2 - Adicionar novo\n");
     scanf("%i",&menu);
+
     if(menu == 2)
     {
         adicionar_produto(array_prod,*id_produto);
@@ -68,6 +73,7 @@ void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos 
         printf("Digite o id do produto desejado,caso exista mais de um produto separar por virgula:\n");
         scanf(" %s",new_product_id);
     }
+
     printf("Digite a quantidade do produto na mesma ordem separado por virgulas\n");
     scanf(" %s",qtd_produto);
 
@@ -76,17 +82,17 @@ void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos 
     int *prices = (int *)malloc(sizeof(int));
     split_ids(qtd_produto,&prices);
     float cust = 0;
+
     for(int i=0;i<size;i++)
     {
         Produto * prod = get_produto(array_prod,_pesquisar_id_produto(array_prod,ids[i]));
         cust += prod->preco * prices[i];
     }
+
     printf("O preco de custo foi: %.2f\n",cust);
     printf("O preco de venda e %.2f\n",cust *1.75);
     printf("Escreva a data de entrega dd/mm/aa");
     scanf(" %s",data);
-
-    
 }
 
-#endif // 
+#endif 
