@@ -4,5 +4,7 @@
 
 int main()
 {
-    
+    Array_pedidos * array_ped = construtor_array_pedidos();
+    get_tsv_pedido(array_ped,"pedidos.tsv");
+
 }

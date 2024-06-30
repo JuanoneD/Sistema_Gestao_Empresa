@@ -31,6 +31,7 @@ void menu_pedido()
     printf("|------ 1 - Inserir novo pedido -------|");
     printf("|------ 2 - Vizualizar pedidos --------|");
     printf("|------ 3 - Pesquisar um pedido -------|");
+    printf("|- 4 - Atualizar status de um pedido - |");
     printf("|------ 4 - Remover um pedido  --------|");
     printf("|------ 0 -  Sair ---------------------|");
     printf("---------------------------------------");
@@ -146,14 +147,14 @@ void ver_pedidos(Array_pedidos * array,Array_cliente * array_clie,Array_produtos
 
 }
 
-void pesquisar_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
+Pedido *  pesquisar_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
 {
     char op[100];
     Cliente * clie;
     Pedido * ped;
     Produto * prod;
     int size;
-    printf("Digite o id do pedido que deseja pesquisar ou nome do cliente:\n");
+    printf("Digite o id do pedido ou nome do cliente:\n");
     fflush(stdin);
     gets(op);
     int *ids = (int*)malloc(sizeof(int));
@@ -164,19 +165,21 @@ void pesquisar_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_pro
         if(!ped)
         {
             printf("Pedido não encontrado\n");
-            return;
+            return NULL;
         }
         print_pedido(ped,array_clie,array_prod);
-        return;
+        return ped;
     }
 
     clie = pesquisar_nome_cliente(array_clie,op);
     if(!clie)
     {
         printf("Cliente não encontrado\n");
-        return;
+        return NULL;
     }
     int *ids = (int*)malloc(sizeof(int));
+    Pedido * ped2 = NULL;
+    int first = 0;
     for(int i=0;i<array->size;i++)
     {
         ped = get_pedido(array,i);
@@ -186,11 +189,29 @@ void pesquisar_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_pro
             if(clie->id == ids[j])
             {
                 print_pedido(ped,array_clie,array_prod);
+                if(first == 0)
+                {
+                    ped2 = ped;
+                    first++;
+                }
                 break;
             }
         }
     }
     free(ids);
+    return ped2;
+}
+
+void atualizar_status(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
+{
+    char status[100];
+    Pedido * ped = pesquisar_pedido(array,array_clie,array_prod);
+    if(!ped) return;
+    printf("Digite o status do pedido");
+    fflush(stdin);
+    gets(status);
+    strcpy(ped->status,status);
+    printf("Status atualizado com sucesso\n");
 }
 
 void remover_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
