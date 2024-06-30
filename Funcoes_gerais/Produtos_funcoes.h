@@ -6,20 +6,31 @@
 #define Produtos_funcoes
 
 // Funcao responsavel por mostrar as opçoes ao usuário
-int menu_produtos(){
-    printf("\n----------------------------------------");
-    printf("\n|------------- Produtos ---------------|");
-    printf("\n|------ 1 - Inserir novo produto ------|");
-    printf("\n|------ 2 - Remover um produto --------|");
-    printf("\n|------ 3 - Pesquisar um produto ------|");
-    printf("\n|------ 4 - Vizualizar produtos -------|");
-    printf("\n|------ 5 - Editar produto -------|");
-    printf("\n|------ 0 -  Sair ---------------------|");
-    printf("\n---------------------------------------\n");
-
+int menu_produtos()
+{
     int op;
-    printf("Opcao desejada: ");
-    scanf("%i", &op);
+
+    while(op == 0) {
+
+        printf("\n----------------------------------------");
+        printf("\n|------------- Produtos ---------------|");
+        printf("\n|------ 1 - Inserir novo produto ------|");
+        printf("\n|------ 2 - Remover um produto --------|");
+        printf("\n|------ 3 - Pesquisar um produto ------|");
+        printf("\n|------ 4 - Vizualizar produtos -------|");
+        printf("\n|------ 5 - Editar produto ------------|");
+        printf("\n|------ 0 -  Sair ---------------------|");
+        printf("\n---------------------------------------\n");
+
+        printf("\n\nDigite a opcao desejada: ");
+        scanf("%i", &op);
+
+        //Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
+        if (op == 0 || op > 6) 
+        {
+            printf("\nPor favor, digite uma opcao valida");
+        }
+    }
 
     return op;
 
@@ -28,7 +39,9 @@ int menu_produtos(){
 // Todas as funções abaixo são responsáveis por executar as funcões da biblioteca Produtos_estruturas 
 // e serem funcoes secundárias 
 
-void adicionar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id){ // funcao criada para a interação do usuario ao adicionar o produto 
+// funcao criada para a interação do usuario ao adicionar o produto 
+void adicionar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id)
+{ 
     char nome[50];
     char uniMedida[20];
     char ingredientes[60];
@@ -57,8 +70,9 @@ void adicionar_produto(Array_produtos * array, Array_ingrediente * ingred_array,
     printf("O produto '%s' foi adicionado com sucesso!", nome);
 }
 
-
-void deletar_produto(Array_produtos * array){ // o usuário irá inserir o nome ou id do produto que deseja 
+// o usuário irá inserir o nome ou id do produto que deseja
+void deletar_produto(Array_produtos * array)
+{  
     char prod[50];
 
     printf("\nDigite o ID ou Nome do produto que deseja deletar: ");
@@ -85,24 +99,28 @@ void deletar_produto(Array_produtos * array){ // o usuário irá inserir o nome 
 
 }
 
+//Função que verifica se a string digitada é um número
 int eh_numero(char * buffer)
 {
     while(*buffer || *buffer != '\0')
     {
         if(isdigit(*buffer++) == 0) return 0;
     }
+
     return 1;
 }
 
-Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_array){
-
+//Função para pesquisar um iproduto pelo nome ou id
+Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_array)
+{
     char search[50];
 
-    printf("----------- Pesquisar Produto -------------");
+    printf("\n----------- Pesquisar Produto -------------");
 
     printf("\nDigite o ID ou Nome do produto que deseja pesquisar: ");
     fflush(stdin);
     gets(search);
+
     Produto * produto;
     
     if (eh_numero(search) == 1)
@@ -125,10 +143,12 @@ Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_a
         int *ids_ingredientes = malloc(sizeof(int));
         int size = split_ids(produto->ingredientes, ids_ingredientes);
 
-        for(int i = 0; i < size; i++ ){
+        for(int i = 0; i < size; i++ )
+        {
             Ingrediente * ingrediente = get_ingrediente(ingred_array,pesquisar_id_ingrediente(ingred_array, ids_ingredientes[i]));
             ids_ingredientes[i] = ingrediente->nome;
         }
+
         printf("\nIngredientes: %s", produto->ingredientes);
         printf("\nUnidade de medida: %s", produto->uniMedida);
         printf("\nPreco:R$ %f", produto->preco);
@@ -138,7 +158,9 @@ Produto * pesquisar_produto(Array_produtos * array, Array_ingrediente * ingred_a
     return produto;
 }
 
-void visualizar_produtos(Array_produtos * array){
+//Função para visualizar o array de produtos em ordem alfabética ou por id (crescente e decrescente)
+void visualizar_produtos(Array_produtos * array)
+{
     int op;
 
     printf("\n1 - Visulizar em ordem alfabetica");
@@ -147,22 +169,22 @@ void visualizar_produtos(Array_produtos * array){
     printf("\nOpcao: ");
     scanf("%i", &op);
 
-
     switch (op)
     {
-    case 1:
-        _ordem_alfabetica_produto(array, 0, array->size-1);
-        break;
-    
-    case 2:
-        organizar_array(array);
-        break;
+        case 1:
+            _ordem_alfabetica_produto(array, 0, array->size-1);
+            break;
+        
+        case 2:
+            organizar_array(array);
+            break;
     }
 
     printf("\n--------- Lista de Produtos -------\n");
     printf("\nID\t| NOME\t\t| INGREDIENTES\t\t| UNI MED\t\t|  PRECO");
 
-    for (int i = 0; i < array->size; i++){
+    for (int i = 0; i < array->size; i++)
+    {
         Produto * produto = get_produto(array, i);
         
         printf("\n%i\t", produto->id);
@@ -170,12 +192,12 @@ void visualizar_produtos(Array_produtos * array){
         printf(" %s\t\t", produto->ingredientes);
         printf(" %s\t\t", produto->uniMedida);
         printf("%f\t\t", produto->preco);         
-
     }
 }
 
-void editar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id){
-
+//Função para editar as informações de um produto específico
+void editar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id)
+{
     printf("\n----------- Editar Produto -------------");
     Produto * produto =  pesquisar_produto(array,ingred_array);
    
@@ -203,7 +225,8 @@ void editar_produto(Array_produtos * array, Array_ingrediente * ingred_array, in
         printf("Digite 1 para adicionar um novo produto ou 0 para voltar ao menu principal: ");
         scanf("%i", &op);
 
-        if (op == 1){
+        if (op == 1)
+        {
             adicionar_produto(array, ingred_array, id);
         }
         else
@@ -211,9 +234,6 @@ void editar_produto(Array_produtos * array, Array_ingrediente * ingred_array, in
             menu_produtos();
         }
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> milena
 }
+
 #endif

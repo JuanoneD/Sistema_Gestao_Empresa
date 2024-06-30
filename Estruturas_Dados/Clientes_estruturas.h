@@ -1,6 +1,4 @@
 #include "Estruturas.h"
-
-
 #ifndef Clientes_estruturas
 #define Clientes_estruturas
 
@@ -12,9 +10,11 @@ typedef struct Array_dinamico_cliente
 
 } Array_cliente;
 
+//Cria o construtor de cliente
 Array_cliente * construtor_array_cliente()
 {
     Array_cliente * novo = (Array_cliente*)malloc(sizeof(Array_cliente));
+    
     novo->array = NULL;
     novo->capacity = 0;
     novo->size = 0;
@@ -50,11 +50,11 @@ Cliente * get_cliente(Array_cliente *array, int index)
     {
         return NULL;
     }
+
     return &array->array[index];
 }
 
-//// espaço para fazer sort
-
+// Ordenação 
 void swap(Array_cliente * array, int i, int j)
 {
 	Cliente temp = array->array[i];
@@ -62,6 +62,7 @@ void swap(Array_cliente * array, int i, int j)
 	array->array[j] = temp;
 }
 
+//Função que organiza o array em ordem crescente
 void _quick_sort(Array_cliente * v, int begin, int end)
 {
 	if(end <= begin)
@@ -78,12 +79,14 @@ void _quick_sort(Array_cliente * v, int begin, int end)
 		{
 			j--;
 		}
+
 		swap(v, i, j);
 		
 		while(i < j && v->array[i].id <= v->array[j].id)
 		{
 			i++;
 		}
+
 		swap(v, i, j);
 	}
 	
@@ -91,11 +94,13 @@ void _quick_sort(Array_cliente * v, int begin, int end)
 	_quick_sort(v, i + 1, end);
 }
 
+//Chama a função que organiza em ordem crescente
 void organizar_array(Array_cliente * array)
 {
     _quick_sort(array,0,array->size-1);
 }
 
+//Função que organiza o array em ordem decrescente
 void ordem_decrescente(Array_cliente * v, int begin, int end)
 {
 	if(end <= begin)
@@ -112,12 +117,14 @@ void ordem_decrescente(Array_cliente * v, int begin, int end)
 		{
 			j--;
 		}
+
 		swap(v, i, j);
 		
 		while(i < j && v->array[i].id >= v->array[j].id)
 		{
 			i++;
 		}
+
 		swap(v, i, j);
 	}
 	
@@ -125,14 +132,15 @@ void ordem_decrescente(Array_cliente * v, int begin, int end)
 	ordem_decrescente(v, i + 1, end);
 }
 
+//Chama a função que organiza em ordem decrescente
 void organizar_array_decrescente(Array_cliente * array)
 {
     ordem_decrescente(array,0,array->size-1);
 }
 
 //Função que ordena a lista de clientes em ordem alfabética
-void ordem_alfabetica_cliente(Array_cliente * array, int begin, int end) {
-
+void ordem_alfabetica_cliente(Array_cliente * array, int begin, int end) 
+{
     if(end <= begin)
 	{
 		return;
@@ -147,12 +155,14 @@ void ordem_alfabetica_cliente(Array_cliente * array, int begin, int end) {
 		{
 			j--;
 		}
+
 		swap(array, i, j);
 		
 		while(i < j && strcmp(array->array[i].nome, array->array[j].nome) <= 0)
 		{
 			i++;
 		}
+
 		swap(array, i, j);
 	}
 	
@@ -160,14 +170,13 @@ void ordem_alfabetica_cliente(Array_cliente * array, int begin, int end) {
 	ordem_alfabetica_cliente(array, i + 1, end);
 }
 
-
-
+//Função que realiza a pesquisa por nome no array de clientes
 Cliente * pesquisar_nome_cliente(Array_cliente * array, char nome[]) {
 
     for(int i = 0; i < array->size; i++)
 	{
-        if(strcmp(array->array[i].nome, nome) == 0) {
-
+        if(strcmp(array->array[i].nome, nome) == 0) 
+        {
             return &array->array[i];
         }
 	}
@@ -175,11 +184,12 @@ Cliente * pesquisar_nome_cliente(Array_cliente * array, char nome[]) {
     return NULL;
 }
 
+//Função que realiza a pesquisa por id no array de clientes
 int pesquisar_id_cliente(Array_cliente *array, int id)
 {
     organizar_array(array);
 
-    // organizar pelo id
+    //organizar pelo id
     int begin = 0;
     int end = array->size - 1;
     int mid;
@@ -214,6 +224,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     char new_id[20], new_nome[100], new_cpf[20], new_telefone[30], new_email[60], new_endereco[60];
     
     int i = 0;
+
     while(*buffer && *buffer != '\t')
     {
         new_id[i++] = *buffer++;
@@ -224,6 +235,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     *id = atoi(new_id);
 
     i = 0;
+
     while(*buffer && *buffer != '\t')
     {
         new_nome[i++] = *buffer++;
@@ -234,6 +246,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     strcpy(nome,new_nome);
 
     i = 0;
+
     while(*buffer && *buffer != '\t')
     {
         new_cpf[i++] = *buffer++;
@@ -244,6 +257,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     strcpy(cpf,new_cpf);
 
     i = 0;
+
     while(*buffer && *buffer != '\t')
     {
         new_telefone[i++] = *buffer++;
@@ -254,6 +268,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     strcpy(telefone,new_telefone);
 
     i = 0;
+
     while(*buffer && *buffer != '\t')
     {
         new_email[i++] = *buffer++;
@@ -264,6 +279,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     strcpy(email,new_email);
 
     i = 0;
+
     while(*buffer && *buffer != '\n')
     {
         new_endereco[i++] = *buffer++;
@@ -275,6 +291,7 @@ void split_line_cliente(char * buffer, int * id, char * nome, char * cpf, char *
     
 }
 
+//Função que chama o arquivo tsv de clientes
 void get_tsv_cliente(Array_cliente * array, char arquivo[])
 {
     int id;
@@ -293,6 +310,7 @@ void get_tsv_cliente(Array_cliente * array, char arquivo[])
     fclose(arq);
 }
 
+//Função que altera o arquivo tsv de clientes
 void set_tsv_cliente(Array_cliente * array, char arquivo[])
 {
     organizar_array(array);
@@ -309,15 +327,16 @@ void set_tsv_cliente(Array_cliente * array, char arquivo[])
     fclose(arq);
 }
 
+//Função que remove o cliente do array
 void _deletar_clientes(Array_cliente * array, int id)
 {
     int i = pesquisar_id_cliente(array, id);
 
     swap(array, i, array->size-1);
     array->size--;
-
 }
 
+//Free do array de clientes
 void destruir_array_cliente(Array_cliente * array)
 {
     free(array->array);

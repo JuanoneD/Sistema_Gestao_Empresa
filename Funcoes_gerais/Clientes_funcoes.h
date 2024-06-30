@@ -1,55 +1,61 @@
 #include "..\Estruturas_Dados\Clientes_estruturas.h"
 #include <ctype.h>
 
-int e_numero(char * buffer)
+// Função que verifica se a string digitada é um número
+int e_numero(char *buffer)
 {
-    while(*buffer && *buffer!='\0')
+    while (*buffer && *buffer != '\0')
     {
-        if(isdigit(*buffer++)== 0) return 0;
+        if (isdigit(*buffer++) == 0) return 0;
     }
+
     return 1;
 }
 
-//Função que possui um menu com todas das funcionalidades da estrutura clientes
-int menu_clientes() {
-
+// Função que possui um menu com todas das funcionalidades da estrutura clientes
+int menu_clientes()
+{
     int op = 0;
 
-    printf("\n-----------------------------------------\n");
-    printf("|-------------- Clientes ---------------|\n");
-    printf("|----- 1 - Cadastrar novo cliente ------|\n");
-    printf("|----- 2 - Remover cliente -------------|\n");
-    printf("|----- 3 - Pesquisar cliente -----------|\n");
-    printf("|----- 4 - Visualizar clientes ---------|\n");
-    printf("------ 5 - Sair ------------------------|\n");
-    printf("-----------------------------------------\n");
+    while (op == 0)
+    {
 
-    printf("\n\nDigite a opcao desejada: ");
-    scanf("%i", &op);
+        printf("\n-----------------------------------------\n");
+        printf("|-------------- Clientes ---------------|\n");
+        printf("|----- 1 - Cadastrar novo cliente ------|\n");
+        printf("|----- 2 - Remover cliente -------------|\n");
+        printf("|----- 3 - Pesquisar cliente -----------|\n");
+        printf("|----- 4 - Editar cliente --------------|\n");
+        printf("|----- 5 - Visualizar clientes ---------|\n");
+        printf("------ 6 - Sair ------------------------|\n");
+        printf("-----------------------------------------\n");
 
-    while(op <= 0 || op > 5) {
-        
-        printf("\n\nPor favor, digite uma opcao valida: ");
-        scanf("%i", &op);   
+        printf("\n\nDigite a opcao desejada: ");
+        scanf("%i", &op);
+
+        // Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
+        if (op == 0 || op > 6)
+        {
+            printf("\nPor favor, digite uma opcao valida");
+        }
     }
 
     return op;
-
 }
 
-//Função que adiciona um novo cliente no array de clientes
-void add_cliente(Array_cliente * array, int id) {
-
+// Função que adiciona um novo cliente no array de clientes
+void add_cliente(Array_cliente *array, int id)
+{
     char nome[50];
     char cpf[20];
-    char telefone[15]; 
-    char email[30]; 
+    char telefone[15];
+    char email[30];
     char endereco[50];
 
     printf("\n\n---------- CADASTRAR NOVO CLIENTE ----------");
     printf("\nNome: ");
-    fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
-    gets(nome);
+    fflush(stdin); // permite que o usuário escreva mais de uma palavra sem dar erro
+    gets(nome);    // semelhante ao scanf
 
     printf("\nCPF: ");
     scanf("%s", cpf);
@@ -61,40 +67,40 @@ void add_cliente(Array_cliente * array, int id) {
     scanf("%s", email);
 
     printf("\nEndereco: ");
-    fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
+    fflush(stdin);
     gets(endereco);
 
     _add_cliente(array, id, nome, cpf, telefone, email, endereco);
 
     printf("\n\nNovo cliente cadastrado com sucesso!");
-
 }
 
-//Função que remove um cliente do array de clientes
-void deletar_clientes(Array_cliente * array) {
-
+// Função que remove um cliente do array de clientes
+void deletar_clientes(Array_cliente *array)
+{
     char nome[50];
 
     printf("\n\n---------- DELETAR CLIENTE ----------");
     printf("\nNome: ");
-    fflush(stdin);      //permite que o usuário escreva mais de uma palavra sem dar erro
+    fflush(stdin);
     gets(nome);
 
-    Cliente * cliente = pesquisar_nome_cliente(array, nome);
+    // Pesquisa se o nome informado faz parte da lista de clientes
+    Cliente *cliente = pesquisar_nome_cliente(array, nome);
 
-    //Caso o nome informado não corresponda com nenhum nome do array clientes, será retornado uma mensagem de erro
-    if(cliente == NULL) 
+    // Caso o nome informado não corresponda com nenhum nome do array clientes, será retornada uma mensagem de erro
+    if (cliente == NULL)
     {
         printf("\nCliente nao encontrado.");
     }
 
     _deletar_clientes(array, cliente->id);
-
+    printf("\nO cliente %s foi deletado com sucesso!", cliente->nome);
 }
 
-//Função para pesquisar um cliente pelo nome ou id
-Cliente * pesquisar_cliente(Array_cliente * array) {
-
+// Função para pesquisar um cliente pelo nome ou id
+Cliente *pesquisar_cliente(Array_cliente *array)
+{
     char search[100];
 
     printf("\n----------- Pesquisar Cliente -------------");
@@ -102,22 +108,24 @@ Cliente * pesquisar_cliente(Array_cliente * array) {
     printf("\nDigite o ID ou Nome do cliente: ");
     scanf("%s", search);
 
-    Cliente * cliente;
-    
+    Cliente *cliente;
+
+    // Verifica se a string informada pelo usuário se trata de uma palavra (nome) ou um número (id)
     if (e_numero(search) == 1)
     {
         cliente = get_cliente(array, pesquisar_id_cliente(array, atoi(search)));
     }
     else
     {
-        cliente = pesquisar_nome_cliente(array,search);
+        cliente = pesquisar_nome_cliente(array, search);
     }
 
-    if ( cliente == NULL)
+    if (cliente == NULL)
     {
         printf("Cliente não encontrado! ");
-    } 
-    else 
+        menu_clientes();
+    }
+    else
     {
         printf("\n\n---------- DADOS DO CLIENTE ----------");
         printf("\nID: %i", cliente->id);
@@ -131,41 +139,41 @@ Cliente * pesquisar_cliente(Array_cliente * array) {
     return cliente;
 }
 
-//Função para visualizar o array de clientes em ordem alfabética ou por id (crescente e decrescente)
-void visualizar_clientes(Array_cliente * array) {
-    
+// Função para visualizar o array de clientes em ordem alfabética ou por id (crescente e decrescente)
+void visualizar_clientes(Array_cliente *array)
+{
     printf("\n\nTipos de visualizacao: \n");
     printf("1 - Ordem alfabetica \n");
     printf("2 - Ordem de ID \n");
 
     int op;
-    
+
     printf("\n\nDigite a opcao desejada: ");
     scanf("%i", &op);
 
     switch (op)
     {
         case 1:
-            ordem_alfabetica_cliente(array, 0, array->size-1);
+            ordem_alfabetica_cliente(array, 0, array->size - 1);
             break;
-        
+
         case 2:
             organizar_array(array);
             break;
-    }
+        }
 
-    if(array->array == NULL) 
+    // Se a lista estiver vazia, será retornada uma mensagem
+    if (array->array == NULL)
     {
-
         printf("A lista de clientes esta vazia.");
     }
 
     printf("\n\n---------- LISTA DE CLIENTES ----------");
 
-    for(int i = 0; i < array->size; i++) 
+    for (int i = 0; i < array->size; i++)
     {
-        Cliente * cliente = get_cliente(array, i);
-        
+        Cliente *cliente = get_cliente(array, i);
+
         printf("\n|  ID  |   NOME   |   CPF   | TELEFONE |  E-MAIL  | ENDERECO |\n");
         printf("| %i |", cliente->id);
         printf(" %s |", cliente->nome);
@@ -176,14 +184,15 @@ void visualizar_clientes(Array_cliente * array) {
     }
 }
 
-void editar_cliente(Array_cliente * array, int id){
+// Função para editar as informações de um cliente específico
+void editar_cliente(Array_cliente *array, int id)
+{
+    printf("\n\n----------- EDITAR CLIENTE -------------");
+    printf("\nAntes de editar, sera preciso verificar o cliente na lista\n");
 
-    printf("\n\n----------- EDITAR cliente -------------");
-    printf("\nAntes de editar, sera preciso verificar o item no estoque\n");
-    
-    Cliente * cliente =  pesquisar_cliente(array);
+    Cliente *cliente = pesquisar_cliente(array);
 
-    if(pesquisar_cliente != NULL)
+    if (pesquisar_cliente != NULL)
     {
         printf("\nNome: ");
         fflush(stdin);
@@ -204,14 +213,17 @@ void editar_cliente(Array_cliente * array, int id){
         printf("\nEndereco: ");
         fflush(stdin);
         gets(cliente->endereco);
-    } 
-    
+    }
+
     else
-    {   int op;
+    {
+        // Se o cliente informado não existir na lista, o usuário terá a opção de cadastrá-lo ou retornar ao menu
+        int op;
         printf("\nDigite 1 para adicionar um novo cliente ou 0 para voltar ao menu principal: ");
         scanf("%i", &op);
 
-        if (op == 1){
+        if (op == 1)
+        {
             add_cliente(array, id);
         }
         else
@@ -220,6 +232,3 @@ void editar_cliente(Array_cliente * array, int id){
         }
     }
 }
-
-
-

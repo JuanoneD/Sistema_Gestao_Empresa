@@ -1,5 +1,4 @@
 #include "Estruturas.h"
-
 #ifndef Ingredientes_estruturas
 #define Ingredientes_estruturas
 
@@ -11,12 +10,15 @@ typedef struct Array_dinamico_ingrediente
 
 } Array_ingrediente;
 
+//Cria o construtor de ingrediente
 Array_ingrediente * construtor_array_ingrediente()
 {
     Array_ingrediente * novo = (Array_ingrediente*)malloc(sizeof(Array_ingrediente));
+
     novo->array = NULL;
     novo->capacity = 0;
     novo->size = 0;
+
     return novo;
 }
 
@@ -47,6 +49,7 @@ Ingrediente * get_ingrediente(Array_ingrediente *array, int index)
     {
         return NULL;
     }
+
     return &array->array[index];
 }
 
@@ -64,6 +67,7 @@ void swap(Array_ingrediente * array,int i,int j)
 	array->array[j] = temp;
 }
 
+//Função que organiza o array em ordem crescente
 void quick_sort_asc(Array_ingrediente * v, int begin, int end)
 {
 	if(end <= begin)
@@ -80,12 +84,14 @@ void quick_sort_asc(Array_ingrediente * v, int begin, int end)
 		{
 			j--;
 		}
+
 		swap(v, i, j);
 		
 		while(i < j && v->array[i].id <= v->array[j].id)
 		{
 			i++;
 		}
+
 		swap(v, i, j);
 	}
 	
@@ -93,11 +99,13 @@ void quick_sort_asc(Array_ingrediente * v, int begin, int end)
 	quick_sort_asc(v, i + 1, end);
 }
 
+//Chama a função que organiza em ordem crescente
 void organizar_array_asc(Array_ingrediente * array)
 {
     quick_sort_asc(array,0,array->size-1);
 }
 
+//Função que organiza o array em ordem decrescente
 void quick_sort_dsc(Array_ingrediente * v, int begin, int end)
 {
 	if(end <= begin)
@@ -114,23 +122,28 @@ void quick_sort_dsc(Array_ingrediente * v, int begin, int end)
 		{
 			j--;
 		}
+
 		swap(v, i, j);
 		
 		while(i < j && v->array[i].id >= v->array[j].id)
 		{
 			i++;
 		}
+
 		swap(v, i, j);
 	}
 	
 	quick_sort_dsc(v, begin, i - 1);
 	quick_sort_dsc(v, i + 1, end);
 }
+
+//Chama a função que organiza em ordem decrescente
 void organizar_array_dsc(Array_ingrediente * array)
 {
     quick_sort_dsc(array,0,array->size-1);
 }
 
+//Função que organiza os ingredientes em ordem crescente de quantidade
 void quick_sort_qta(Array_ingrediente * v, int begin, int end)
 {
 	if(end <= begin)
@@ -147,12 +160,14 @@ void quick_sort_qta(Array_ingrediente * v, int begin, int end)
 		{
 			j--;
 		}
+
 		swap(v, i, j);
 		
 		while(i < j && v->array[i].qta <= v->array[j].qta)
 		{
 			i++;
 		}
+
 		swap(v, i, j);
 	}
 	
@@ -160,6 +175,7 @@ void quick_sort_qta(Array_ingrediente * v, int begin, int end)
 	quick_sort_qta(v, i + 1, end);
 }
 
+//Chama a função que organiza os produtos em ordem crescente de quantidade
 void organizar_array_qta(Array_ingrediente * array)
 {
     quick_sort_qta(array,0,array->size-1);
@@ -182,12 +198,14 @@ void ordem_alfabetica_ingrediente(Array_ingrediente * array, int begin, int end)
 		{
 			j--;
 		}
+
 		swap(array, i, j);
 		
 		while(i < j && strcmp(array->array[i].nome, array->array[j].nome) <= 0)
 		{
 			i++;
 		}
+
 		swap(array, i, j);
 	}
 	
@@ -195,35 +213,40 @@ void ordem_alfabetica_ingrediente(Array_ingrediente * array, int begin, int end)
 	ordem_alfabetica_ingrediente(array, i + 1, end);
 }
 
-///
-
+//Função que realiza a pesquisa por id no array de ingredientes
 int pesquisar_id_ingrediente(Array_ingrediente *array,int id)
 {
     // organizar pelo id
     organizar_array_asc(array);
-    //
+    
     int begin = 0;
     int end = array->size - 1;
     int mid;
+
     while (begin <= end)
     {
         mid = begin + (end - begin) / 2;
+
         if(array->array[mid].id == id)
         {
             return mid;
         }
+
         if(array->array[mid].id < id)
         {
             begin = mid + 1;
         }
+
         if(array->array[mid].id > id)
         {
             end = mid - 1;
         }
     }
+
     return -1;
 }
 
+//Função que realiza a pesquisa por nome no array de ingredientes
 Ingrediente * pesquisar_nome_ingrediente(Array_ingrediente * array, char nome[]) {
 
     for(int i = 0; i < array->size; i++)
@@ -241,41 +264,51 @@ void split_line_ingrediente(char *buffer,int *id,char *nome,int *qta,float *prec
 {
     char new_id[20],name[100],quanti[20],new_preco[50];
     int i=0;
+
     while(*buffer && *buffer != '\t')
     {
         new_id[i++] = *buffer++;
     }
+
     new_id[i] = '\0';
     buffer++;
     *id = atoi(new_id);
 
     i = 0;
+
     while(*buffer && *buffer !='\t')
     {
         name[i++] = *buffer++;
     }
+
     name[i] = '\0';
     buffer++;
     strcpy(nome,name);
 
     i=0;
+
     while(*buffer&&*buffer !='\t')
     {
         quanti[i++] = *buffer++;
     }
+
     quanti[i] = '\0';
     buffer++;
     *qta = atoi(quanti);
 
     i=0;
+
     while (*buffer && *buffer!='\t')
     {
         new_preco[i++] = *buffer++;
     }
+
     new_preco[i]='\0';
     *preco = atof(new_preco);
     
 }
+
+//Função que remove o ingrediente do array
 void _deletar_ingrediente(Array_ingrediente * array, int id)
 {
     int i = pesquisar_id_ingrediente(array, id);
@@ -284,36 +317,44 @@ void _deletar_ingrediente(Array_ingrediente * array, int id)
     array->size--;
 }
 
-
+//Função que chama o arquivo tsv de ingredientes
 void get_tsv_ingrediente(Array_ingrediente * array, char arquivo[])
 {
     int id,quant;
     float preco;
     char buffer[1000],nome[100];
+
     FILE * arq = fopen(arquivo,"r");
     if(!arq) return;
     fgets(buffer,999,arq);
+
     while (fgets(buffer,999,arq))
     {
         split_line_ingrediente(buffer,&id,nome,&quant,&preco);
         _add_ingrediente(array,id,nome,quant,preco);
     }
+
     fclose(arq);
 }
 
+//Função que altera o arquivo tsv de ingredientes
 void set_tsv_ingrediente(Array_ingrediente * array, char arquivo[])
 {
     organizar_array_asc(array);
+
     FILE *arq = fopen(arquivo,"w");
     fprintf(arq,"ID\tNOME\tQTD\tPREÇO\n");
+
     for(int i=0;i<array->size;i++)
     {
         Ingrediente * ingre = get_ingrediente(array,i);
         fprintf(arq,"%i\t%s\t%i\t%f\n",ingre->id,ingre->nome,ingre->qta,ingre->preco);
     }
+
     fclose(arq);
 }
 
+//Free do array de ingredientes
 void destruir_array_ingrediente(Array_ingrediente * array)
 {
     free(array->array);
