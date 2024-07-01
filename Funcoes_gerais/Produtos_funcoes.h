@@ -1,5 +1,4 @@
 #include "..\Estruturas_Dados\Produtos_estruturas.h"
-#include <ctype.h>
 #include "Ingredientes_funcoes.h"
 
 #ifndef Produtos_funcoes

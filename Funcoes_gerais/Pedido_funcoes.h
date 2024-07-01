@@ -1,7 +1,6 @@
 #include "..\Estruturas_Dados\Pedidos_estruturas.h"
 #include "Clientes_funcoes.h"
 #include "Produtos_funcoes.h"
-#include "..\Estruturas_Dados\Gerais.h"
 
 #ifndef Pedidos_funcoes
 #define Pedidos_funcoes
@@ -118,7 +117,7 @@
     {
         Pedido * ped;
         printf(" ___________________ PEDIDOS_________________\n");
-        printf("\t ID PEDIDO |\t CLIENTES |\t PRODUTOS x QUANTIDADE |\t PRECO DE CUSTO |\t PRECO DE VENDA |\t DATA |\t STATUS\n");
+        printf(" ID PEDIDO | CLIENTES | PRODUTOS x QUANTIDADE | PRECO DE CUSTO | PRECO DE VENDA | DATA | STATUS\n");
         for(int i=0;i<array->size;i++)
         {
             ped = get_pedido(array,i);
@@ -195,15 +194,19 @@
         int menu;
         printf("Digite o ID do pedido que deseja remover ou 0 para ver todos os pedidos:\n");
         scanf("%i",&menu);
-        if(menu == 0) ver_pedidos(array,array_clie,array_prod);
-        printf("Digite o ID do pedido que deseja remover:\n");
-        scanf("%i",&menu);
+        if(menu == 0)
+        {
+            ver_pedidos(array,array_clie,array_prod);
+            printf("Digite o ID do pedido que deseja remover:\n");
+            scanf("%i",&menu);
+        }
         if(pesquisar_id_pedido(array,menu) < 0)
         {
             printf("Pedido não encontrado");
             return;
         }
         deletar_pedidos(array,pesquisar_id_pedido(array,menu));
+        printf("\nDeletado com sucesso\n");
     }
 
     int get_id_pedido(Array_pedidos * array)

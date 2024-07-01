@@ -23,7 +23,7 @@ int main()
     ver_pedidos(array_ped,array_clie,array_prod);
     //pesquisar_pedido(array_ped,array_clie,array_prod);
     //atualizar_status(array_ped,array_clie,array_prod);
-    remover_pedido(array_ped,array_clie,array_prod);
+    //remover_pedido(array_ped,array_clie,array_prod);
 
 
 

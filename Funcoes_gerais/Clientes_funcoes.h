@@ -1,5 +1,4 @@
 #include "..\Estruturas_Dados\Clientes_estruturas.h"
-#include <ctype.h>
 
 #ifndef Clientes_funcoes
 #define Clientes_funcoes

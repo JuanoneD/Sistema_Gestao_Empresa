@@ -1,10 +1,7 @@
 #include "..\Estruturas_Dados\Ingredientes_estruturas.h"
-#include <ctype.h>
 
 #ifndef Ingrediente_funcoes
 #define Ingrediente_funcoes
-
-
 
     //Função que possui um menu com todas as funcionalidades da estrutura ingredientes
     int menu_ingredientes() 
