@@ -9,26 +9,23 @@
     {
         int op;
 
-        while(op == 0) {
+        printf("\n----------------------------------------");
+        printf("\n|------------- Produtos ---------------|");
+        printf("\n|------ 1 - Inserir novo produto ------|");
+        printf("\n|------ 2 - Remover um produto --------|");
+        printf("\n|------ 3 - Pesquisar um produto ------|");
+        printf("\n|------ 4 - Vizualizar produtos -------|");
+        printf("\n|------ 5 - Editar produto ------------|");
+        printf("\n|------ 0 -  Sair ---------------------|");
+        printf("\n---------------------------------------\n");
 
-            printf("\n----------------------------------------");
-            printf("\n|------------- Produtos ---------------|");
-            printf("\n|------ 1 - Inserir novo produto ------|");
-            printf("\n|------ 2 - Remover um produto --------|");
-            printf("\n|------ 3 - Pesquisar um produto ------|");
-            printf("\n|------ 4 - Vizualizar produtos -------|");
-            printf("\n|------ 5 - Editar produto ------------|");
-            printf("\n|------ 0 -  Sair ---------------------|");
-            printf("\n---------------------------------------\n");
+        printf("\n\nDigite a opcao desejada: ");
+        scanf("%i", &op);
 
-            printf("\n\nDigite a opcao desejada: ");
-            scanf("%i", &op);
-
-            //Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
-            if (op == 0 || op > 6) 
-            {
-                printf("\nPor favor, digite uma opcao valida");
-            }
+        //Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
+        if (op < 0 || op > 6) 
+        {
+            printf("\nPor favor, digite uma opcao valida");
         }
 
         return op;
@@ -79,7 +76,7 @@
         gets(prod);
         Produto * produto;
         
-        if (eh_numero(prod) == 1)
+        if (e_numero(prod) == 1)
         {
             produto = get_produto(array,_pesquisar_id_produto(array, atoi(prod)));
             
@@ -92,10 +89,10 @@
         if( produto == NULL)
         {
             printf("Produto não encontrado! ");
+            return;
         } 
-
         _deletar_produtos(array, produto->id);
-
+        printf("Deletado com sucesso");
     }
 
 
@@ -112,7 +109,7 @@
 
         Produto * produto;
         
-        if (eh_numero(search) == 1)
+        if (e_numero(search) == 1)
         {
             produto = get_produto(array,_pesquisar_id_produto(array, atoi(search)));
         }
@@ -133,15 +130,16 @@
             int *ids_ingredientes = malloc(sizeof(int));
             int size = split_ids(produto->ingredientes,&ids_ingredientes);
 
+            printf("\nIngredientes: ");
             for(int i = 0; i < size; i++ )
             {
                 Ingrediente * ingrediente = get_ingrediente(ingred_array,pesquisar_id_ingrediente(ingred_array, ids_ingredientes[i]));
+                if(!ingrediente)break;
                 printf(" %s,",ingrediente->nome);
             }
 
-            printf("\nIngredientes: %s", produto->ingredientes);
             printf("\nUnidade de medida: %s", produto->uniMedida);
-            printf("\nPreco:R$ %f", produto->preco);
+            printf("\nPreco:R$ %.2f", produto->preco);
 
         }
 
