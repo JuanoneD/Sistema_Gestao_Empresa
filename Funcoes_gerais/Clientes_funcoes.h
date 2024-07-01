@@ -126,7 +126,7 @@
         if (cliente == NULL)
         {
             printf("Cliente não encontrado! ");
-            menu_clientes();
+            return NULL;
         }
         else
         {
@@ -195,7 +195,7 @@
 
         Cliente *cliente = pesquisar_cliente(array);
 
-        if (pesquisar_cliente != NULL)
+        if (cliente != NULL)
         {
             printf("\nNome: ");
             fflush(stdin);

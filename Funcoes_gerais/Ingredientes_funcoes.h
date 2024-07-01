@@ -61,7 +61,7 @@
         if (ingrediente == NULL)
         {
             printf("Ingrediente nao encontrado! ");
-            menu_ingredientes();
+            return NULL;
         } 
         else 
         {
@@ -152,7 +152,7 @@
 
                 Ingrediente * ingrediente =  pesquisar_ingrediente(array);
             
-                if(pesquisar_ingrediente != NULL)
+                if(ingrediente != NULL)
                 {
                     printf("\n\nDigite a quantidade que sera adicionada: ");
                     scanf(" %s", search);
@@ -290,7 +290,7 @@
         
         Ingrediente * ingrediente =  pesquisar_ingrediente(array);
 
-        if(pesquisar_ingrediente != NULL)
+        if(ingrediente != NULL)
         {
             printf("\n\nNome do ingrediente: ");
             fflush(stdin);

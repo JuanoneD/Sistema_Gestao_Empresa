@@ -192,7 +192,7 @@
         printf("\n----------- Editar Produto -------------");
         Produto * produto =  pesquisar_produto(array,ingred_array);
     
-        if(pesquisar_produto != NULL)
+        if(produto != NULL)
         {
             printf("\n------ EDICAO DO PRODUTO ------");
 

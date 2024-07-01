@@ -234,7 +234,7 @@ void split_line_produtos(char *buffer, int *id, char *nome, char *uniMedida, cha
     // Preço
     i = 0;
 
-    while (*buffer && *buffer!='\t')
+    while (*buffer && *buffer!='\n')
     {
         new_preco[i++] = *buffer++;
     }

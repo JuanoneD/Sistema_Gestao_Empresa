@@ -51,12 +51,9 @@
             adicionar_produto(array_prod,array_inged,*id_produto);
             *id_produto = *id_produto + 1;
         }
-        else
-        {
-            visualizar_produtos(array_prod);
-            printf("\nDigite o id do produto desejado,caso exista mais de um produto separar por virgula:\n");
-            scanf(" %s",new_product_id);
-        }
+        visualizar_produtos(array_prod);
+        printf("\nDigite o id do produto desejado,caso exista mais de um produto separar por virgula:\n");
+        scanf(" %s",new_product_id);
 
         printf("Digite a quantidade do produto na mesma ordem separado por virgulas\n");
         scanf(" %s",qtd_produto);
@@ -66,10 +63,10 @@
         int *prices = (int *)malloc(sizeof(int));
         split_ids(qtd_produto,&prices);
         float cust = 0;
-
         for(int i=0;i<size;i++)
         {
             Produto * prod = get_produto(array_prod,_pesquisar_id_produto(array_prod,ids[i]));
+            if(!prod) break;
             cust += prod->preco * prices[i];
         }
 
@@ -88,30 +85,31 @@
         int size;
         int *ids = (int*)malloc(sizeof(int));
         int *quant = (int*)malloc(sizeof(int));
-        printf("\t %i |",ped->id);
+        printf(" %i |",ped->id);
 
         size = split_ids(ped->id_cliente,&ids);
-        printf("\t");
         for(int j=0;j<size;j++)
         {
             clie = get_cliente(array_clie,pesquisar_id_cliente(array_clie,ids[j]));
+            if(!clie) break;
             printf(" %s",clie->nome);
             if(j+1<size)printf(",");
         }
         printf(" |");
 
         size = split_ids(ped->id_produto,&ids);
-        split_ids(ped->id_produto,&quant);
-        printf("\t");
+        split_ids(ped->qtd_produto,&quant);
         for(int j=0;j<size;j++)
         {
+            //printf(" %i ",ids[j]);
             prod = get_produto(array_prod,_pesquisar_id_produto(array_prod,ids[j]));
+            if(!prod) break;
             printf(" %s x %i",prod->nome,quant[j]);
-            if(j+1<size)printf(",");
+            if(j+2<size)printf(",");
         }
         printf(" |");
 
-        printf("\t %.2f |\t %.2f |\t %s |\t %s \n",ped->preco_custo,ped->preco_venda,ped->data_entrega,ped->status);
+        printf(" %.2f | %.2f | %s | %s \n",ped->preco_custo,ped->preco_venda,ped->data_entrega,ped->status);
         free(ids);
         free(quant);
     }
@@ -119,7 +117,7 @@
     void ver_pedidos(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
     {
         Pedido * ped;
-        printf(" ___________________ PEDIDOS_________________");
+        printf(" ___________________ PEDIDOS_________________\n");
         printf("\t ID PEDIDO |\t CLIENTES |\t PRODUTOS x QUANTIDADE |\t PRECO DE CUSTO |\t PRECO DE VENDA |\t DATA |\t STATUS\n");
         for(int i=0;i<array->size;i++)
         {
@@ -134,12 +132,10 @@
         char op[100];
         Cliente * clie;
         Pedido * ped;
-        int size;
         printf("Digite o id do pedido ou nome do cliente:\n");
         fflush(stdin);
         gets(op);
         int *ids = (int*)malloc(sizeof(int));
-        int *quant = (int*)malloc(sizeof(int));
         if(e_numero(op)==1)
         {
             ped =  get_pedido(array,pesquisar_id_pedido(array,atoi(op)));

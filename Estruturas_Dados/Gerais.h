@@ -25,7 +25,7 @@
             //printf("%i ",atoi(word));
             (*array)[size++] = atoi(word);
         }
-        return size-1;
+        return size;
     }
 
     //Recebe um buffer e retorna 0 se não for um numero e 1 se for um numero

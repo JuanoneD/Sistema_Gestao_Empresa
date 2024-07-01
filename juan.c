@@ -18,8 +18,14 @@ int main()
     int id_produto = get_id_produto(array_prod)>=0?get_id_produto(array_prod):1;
     int id_ingred = get_id_ingrediente(array_ingred)>=0?get_id_ingrediente(array_ingred):1;
 
-    adicionar_produto(array_prod,array_ingred,id_produto++);
-    add_pedido(array_ped,array_clie,array_prod,array_ingred,id_pedido++,&id_cliente,&id_produto);
+    //adicionar_produto(array_prod,array_ingred,id_produto++);
+    //add_pedido(array_ped,array_clie,array_prod,array_ingred,id_pedido++,&id_cliente,&id_produto);
+    ver_pedidos(array_ped,array_clie,array_prod);
+    //pesquisar_pedido(array_ped,array_clie,array_prod);
+    //atualizar_status(array_ped,array_clie,array_prod);
+    remover_pedido(array_ped,array_clie,array_prod);
+
+
 
     set_tsv_pedido(array_ped,"pedidos.tsv");
     set_tsv_produtos(array_prod,"produtos.tsv");
