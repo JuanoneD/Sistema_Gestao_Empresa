@@ -1,4 +1,4 @@
-#include "Funcoes_gerais\Pedido_funcoes.h"
+#include "Funcoes_gerais\Financeiro_funcoes.h"
 
 
 
@@ -26,7 +26,7 @@ int main()
     //remover_pedido(array_ped,array_clie,array_prod);
 
 
-
+    gerar_relatorio_finan(array_ped);
     set_tsv_pedido(array_ped,"pedidos.tsv");
     set_tsv_produtos(array_prod,"produtos.tsv");
 }
