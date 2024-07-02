@@ -4,15 +4,6 @@
 #define Clientes_funcoes
 
     // Função que verifica se a string digitada é um número
-    int e_numero(char *buffer)
-    {
-        while (*buffer && *buffer != '\0')
-        {
-            if (isdigit(*buffer++) == 0) return 0;
-        }
-
-        return 1;
-    }
 
     // Função que possui um menu com todas das funcionalidades da estrutura clientes
     int menu_clientes()
@@ -94,10 +85,11 @@
         if (cliente == NULL)
         {
             printf("\nCliente nao encontrado.");
+            menu_clientes();
         }
 
         _deletar_clientes(array, cliente->id);
-        printf("\nO cliente %s foi deletado com sucesso!", cliente->nome);
+        printf("\nO cliente %s foi deletado com sucesso!", nome);
     }
 
     // Função para pesquisar um cliente pelo nome ou id

@@ -19,20 +19,6 @@
         printf("\n|------ 0 -  Sair ---------------------|");
         printf("\n---------------------------------------\n");
 
-<<<<<<< HEAD
-        printf("\n\nDigite a opcao desejada: ");
-        scanf("%i", &op);
-=======
-            printf("\n----------------------------------------");
-            printf("\n|------------- Produtos ---------------|");
-            printf("\n|------ 1 - Inserir novo produto ------|");
-            printf("\n|------ 2 - Remover um produto --------|");
-            printf("\n|------ 3 - Pesquisar um produto ------|");
-            printf("\n|------ 4 - Editar produto ------------|");
-            printf("\n|------ 5 - Visualizar produtos -------|");
-            printf("\n|------ 0 - Sair ----------------------|");
-            printf("\n---------------------------------------\n");
->>>>>>> ingrid
 
         //Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
         if (op < 0 || op > 6) 
