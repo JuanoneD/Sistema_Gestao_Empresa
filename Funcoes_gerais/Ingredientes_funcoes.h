@@ -261,12 +261,12 @@
 
         printf("\n\n---------- ESTOQUE DE INGREDIENTES ----------");
 
+        printf("\n|  ID  |   NOME   |   QUANTIDADE   | PRECO |\n");
         for(int i = 0; i < array->size; i++) 
         {
             Ingrediente * ingrediente = get_ingrediente(array, i);
             
-            printf("\n|  ID  |   NOME   |   QUANTIDADE   | PRECO |\n");
-            printf("| %i |", ingrediente->id);
+            printf("\n| %i |", ingrediente->id);
             printf(" %s |", ingrediente->nome);
             printf(" %i |", ingrediente->qta);
             printf(" %f |", ingrediente->preco);

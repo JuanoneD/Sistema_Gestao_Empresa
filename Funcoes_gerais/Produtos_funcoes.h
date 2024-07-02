@@ -52,6 +52,7 @@
         fflush(stdin);
         gets(uniMedida);
 
+        printf("\n---Ingredientes---");
         visualizar_ingredientes(ingred_array);
         printf("\nIDs Ingredientes: ");
         fflush(stdin);
