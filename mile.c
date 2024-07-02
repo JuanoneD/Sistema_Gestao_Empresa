@@ -3,6 +3,10 @@
 int main()
 {
 
+<<<<<<< HEAD
+=======
+    int op = 0;
+>>>>>>> ingrid
     Array_produtos * array = construtor_array_produtos();
     get_tsv_produto(array,"produtos.tsv");
 
@@ -14,8 +18,12 @@ int main()
     get_tsv_ingrediente(ingred_array, "ingredientes.tsv");
     int op = 1;
 
+<<<<<<< HEAD
     while(op != 0){
 
+=======
+    while(op == 0){
+>>>>>>> ingrid
         op = menu_produtos();
 
         switch(op)
