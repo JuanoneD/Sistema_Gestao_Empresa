@@ -127,7 +127,7 @@
         {
             printf("\nProduto: %s", produto->nome);
 
-            int *ids_ingredientes = malloc(sizeof(int));
+            int *ids_ingredientes =(int *)malloc(sizeof(int));
             int size = split_ids(produto->ingredientes,&ids_ingredientes);
 
             printf("\nIngredientes: ");
