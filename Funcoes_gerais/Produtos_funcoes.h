@@ -19,8 +19,11 @@
         printf("\n|------ 0 -  Sair ---------------------|");
         printf("\n---------------------------------------\n");
 
+<<<<<<< HEAD
         printf("\n\nDigite a opcao desejada: ");
         scanf("%i", &op);
+=======
+>>>>>>> milena
 
         //Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
         if (op < 0 || op > 6) 
