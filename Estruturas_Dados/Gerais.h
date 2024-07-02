@@ -29,7 +29,7 @@
     }
 
     //Recebe um buffer e retorna 0 se não for um numero e 1 se for um numero
-    int eh_numero(char * buffer)
+    int e_numero(char * buffer)
     {
         while(*buffer || *buffer != '\0')
         {
