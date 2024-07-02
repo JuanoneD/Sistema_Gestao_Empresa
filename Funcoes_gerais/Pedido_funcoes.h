@@ -13,15 +13,15 @@
 
         while (op == 0)
         {
-            printf("----------------------------------------");
-            printf("|------------- Pedidos ----------------|");
-            printf("|------ 1 - Inserir novo pedido -------|");
-            printf("|------ 2 - Visualizar pedidos --------|");
-            printf("|------ 3 - Pesquisar um pedido -------|");
-            printf("|- 4 - Atualizar status de um pedido - |");
-            printf("|------ 4 - Remover um pedido  --------|");
-            printf("|------ 0 -  Sair ---------------------|");
-            printf("---------------------------------------");
+            printf("----------------------------------------\n");
+            printf("|------------- Pedidos ----------------|\n");
+            printf("|------ 1 - Inserir novo pedido -------|\n");
+            printf("|------ 2 - Visualizar pedidos --------|\n");
+            printf("|------ 3 - Pesquisar um pedido -------|\n");
+            printf("|- 4 - Atualizar status de um pedido - |\n");
+            printf("|------ 5 - Remover um pedido  --------|\n");
+            printf("|------ 6 -  Sair ---------------------|\n");
+            printf("----------------------------------------\n");
         
             printf("\n\nDigite a opcao desejada: ");
             scanf("%i", &op);
@@ -198,7 +198,7 @@
         char status[100];
         Pedido * ped = pesquisar_pedido(array, array_clie, array_prod);
         if(!ped) return;
-        printf("Digite o status do pedido");
+        printf("Digite o status do pedido: ");
         fflush(stdin);
         gets(status);
         strcpy(ped->status,status);

@@ -16,14 +16,11 @@
         printf("\n|------ 3 - Pesquisar um produto ------|");
         printf("\n|------ 4 - Vizualizar produtos -------|");
         printf("\n|------ 5 - Editar produto ------------|");
-        printf("\n|------ 0 -  Sair ---------------------|");
+        printf("\n|------ 6 -  Sair ---------------------|");
         printf("\n---------------------------------------\n");
 
-<<<<<<< HEAD
         printf("\n\nDigite a opcao desejada: ");
         scanf("%i", &op);
-=======
->>>>>>> milena
 
         //Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
         if (op < 0 || op > 6) 
@@ -213,7 +210,7 @@
         } 
         else
         {   int op;
-            printf("Digite 1 para adicionar um novo produto ou 0 para voltar ao menu principal: ");
+            printf("\nDigite 1 para adicionar um novo produto ou 0 para voltar ao menu principal: ");
             scanf("%i", &op);
 
             if (op == 1)

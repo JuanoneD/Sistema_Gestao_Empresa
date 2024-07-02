@@ -3,13 +3,6 @@
 #ifndef Clientes_funcoes
 #define Clientes_funcoes
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    // Função que verifica se a string digitada é um número
->>>>>>> milena
-=======
->>>>>>> juan
 
     // Função que possui um menu com todas das funcionalidades da estrutura clientes
     int menu_clientes()

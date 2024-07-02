@@ -195,7 +195,7 @@
         char search[50];
 
         printf("\n\n---------- DELETAR INGREDIENTE ----------");
-        printf("\nDigite o ID ou Nome do cliente que deseja deletar: ");
+        printf("\nDigite o ID ou Nome do ingrediente que deseja deletar: ");
         fflush(stdin);      
         gets(search);
 

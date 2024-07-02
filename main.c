@@ -1,4 +1,4 @@
-#include "Funcoes_gerais\Pedido_funcoes.h"
+#include "Funcoes_gerais\Financeiro_funcoes.h"
 
 int main()
 {
@@ -20,7 +20,7 @@ int main()
     int op_menu = 0;
     int acabar = 0;
 
-    while (op_menu == 0)
+    while (op_menu != 6)
     {
         printf("\n-----------------------------------------\n");
         printf("|---------------- Menu -----------------|\n");
@@ -45,6 +45,7 @@ int main()
         {   
             //Funções clientes
             case 1:
+                acabar = 0;
                 while (acabar == 0)
                 {
                     int op = menu_clientes();
@@ -72,18 +73,15 @@ int main()
                             break;
 
                         case 6:
-                            acabar = 1;
+                            acabar ++;
                             break;
-
                     }
-
-                    set_tsv_cliente(array_clie, "clientes.tsv");
                 }
-
                 break;
-            
+
             //Funções ingredientes
             case 2:
+                acabar = 0;
                 while (acabar == 0)
                 {
                     int op = menu_ingredientes();
@@ -109,20 +107,17 @@ int main()
                         case 5:
                             visualizar_ingredientes(array_ingred);
                             break;
-
                         case 6:
-                            acabar = 1;
+                            acabar++;
                             break;
-
                     }
-
-                    set_tsv_ingrediente(array_ingred, "ingredientes.tsv");
                 }
                 
                 break;
 
             //Funções produtos
             case 3:
+                acabar = 0;
                 while (acabar == 0)
                 {
                     int op = menu_produtos();
@@ -142,26 +137,23 @@ int main()
                             break;
                             
                         case 4:
-                            editar_produto(array_prod, array_ingred, id_produto++);
+                            visualizar_produtos(array_prod);
                             break;
                         
                         case 5:
-                            visualizar_produtos(array_prod);
+                            editar_produto(array_prod, array_ingred, id_produto++);
                             break;
 
                         case 6:
-                            acabar = 1;
+                            acabar ++;
                             break;
-
                     }
-
-                    set_tsv_produtos(array_prod, "produtos.tsv");
                 }
-                
                 break;
             
             //Funções pedidos
             case 4:
+                acabar = 0;
                 while (acabar == 0)
                 {
                     int op = menu_pedido();
@@ -169,7 +161,7 @@ int main()
                     switch (op)
                     {
                         case 1:
-                            add_pedido(array_ped, array_clie, array_prod, array_ingred, id_pedido++, id_cliente++, id_produto++);
+                            add_pedido(array_ped, array_clie, array_prod, array_ingred, id_pedido++, &id_cliente, &id_produto);
                             break;
 
                         case 2:
@@ -185,30 +177,48 @@ int main()
                             break;
                         
                         case 5:
-                            ver_pedidos(array_ped, array_clie, array_prod);
+                            remover_pedido(array_ped,array_clie,array_prod);
                             break;
 
                         case 6:
-                            acabar = 1;
+                            acabar ++;
                             break;
 
                     }
 
-                    set_tsv_pedido(array_ped, "pedidos.tsv");
                 }
                 
                 break;
             
             //Funções controle financeiro
             case 5:
+                acabar = 0;
+                while (acabar == 0)
+                {
+                    int op = menu_financeiro();
+                    switch (op)
+                    {
+                    case 1:
+                        gerar_relatorio_finan(array_ped);
+                        break;
+                    
+                    case 2:
+                        acabar ++;
+                        break;
+                    }
+                }
+                
                 break;
             
             //Sair
             case 6:
-                acabar = 0;
+                printf("FLW");
                 break;
         }
     }
-
-    return op_menu;
+    set_tsv_pedido(array_ped, "pedidos.tsv");
+    set_tsv_cliente(array_clie, "clientes.tsv");
+    set_tsv_ingrediente(array_ingred, "ingredientes.tsv");
+    set_tsv_produtos(array_prod, "produtos.tsv");
+    return 1;
 }
