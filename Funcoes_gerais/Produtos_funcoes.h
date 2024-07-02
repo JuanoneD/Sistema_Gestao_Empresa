@@ -16,9 +16,9 @@
             printf("\n|------ 1 - Inserir novo produto ------|");
             printf("\n|------ 2 - Remover um produto --------|");
             printf("\n|------ 3 - Pesquisar um produto ------|");
-            printf("\n|------ 4 - Vizualizar produtos -------|");
-            printf("\n|------ 5 - Editar produto ------------|");
-            printf("\n|------ 0 -  Sair ---------------------|");
+            printf("\n|------ 4 - Editar produto ------------|");
+            printf("\n|------ 5 - Visualizar produtos -------|");
+            printf("\n|------ 0 - Sair ----------------------|");
             printf("\n---------------------------------------\n");
 
             printf("\n\nDigite a opcao desejada: ");

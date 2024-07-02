@@ -46,7 +46,7 @@
         Ingrediente * ingrediente;
         
         //Verifica se a string informada pelo usuário se trata de uma palavra (nome) ou um número (id)
-        if (e_numero(search) == 1)
+        if (eh_numero(search) == 1)
         {
             ingrediente = get_ingrediente(array, pesquisar_id_ingrediente(array, atoi(search)));
         }

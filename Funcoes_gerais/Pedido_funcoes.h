@@ -7,22 +7,38 @@
 
 
     // Função que possui um menu com todas das funcionalidades da estrutura pedidos
-    void menu_pedido()
+    int menu_pedido()
     {
-        printf("----------------------------------------");
-        printf("|------------- Pedidos ----------------|");
-        printf("|------ 1 - Inserir novo pedido -------|");
-        printf("|------ 2 - Vizualizar pedidos --------|");
-        printf("|------ 3 - Pesquisar um pedido -------|");
-        printf("|- 4 - Atualizar status de um pedido - |");
-        printf("|------ 4 - Remover um pedido  --------|");
-        printf("|------ 0 -  Sair ---------------------|");
-        printf("---------------------------------------");
+        int op = 0;
+
+        while (op == 0)
+        {
+            printf("----------------------------------------");
+            printf("|------------- Pedidos ----------------|");
+            printf("|------ 1 - Inserir novo pedido -------|");
+            printf("|------ 2 - Visualizar pedidos --------|");
+            printf("|------ 3 - Pesquisar um pedido -------|");
+            printf("|- 4 - Atualizar status de um pedido - |");
+            printf("|------ 4 - Remover um pedido  --------|");
+            printf("|------ 0 -  Sair ---------------------|");
+            printf("---------------------------------------");
+        
+            printf("\n\nDigite a opcao desejada: ");
+            scanf("%i", &op);
+
+            // Se o usuário digitar um número que não corresponda a nenhuma das opções, será retornada uma mensagem de erro
+            if (op == 0 || op > 6)
+            {
+                printf("\nPor favor, digite uma opcao valida");
+            }
+        }
+
+        return op;
 
     }
 
     // Função que adiciona um novo pedido no array de pedidos
-    void add_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod,Array_ingrediente * array_inged,int id_pedido,int *id_cliente,int *id_produto)
+    void add_pedido(Array_pedidos * array, Array_cliente * array_clie, Array_produtos * array_prod, Array_ingrediente * array_inged, int id_pedido, int *id_cliente, int *id_produto)
     {
         char new_client_id[100],new_product_id[100],qtd_produto[100],data[100];
         int menu = 0;
@@ -62,7 +78,7 @@
         int *prices = (int *)malloc(sizeof(int));
         split_ids(qtd_produto,&prices);
         float cust = 0;
-        for(int i=0;i<size;i++)
+        for(int i = 0; i < size; i++)
         {
             Produto * prod = get_produto(array_prod,_pesquisar_id_produto(array_prod,ids[i]));
             if(!prod) break;
@@ -91,14 +107,14 @@
         {
             clie = get_cliente(array_clie,pesquisar_id_cliente(array_clie,ids[j]));
             if(!clie) break;
-            printf(" %s",clie->nome);
+            printf(" %s", clie->nome);
             if(j+1<size)printf(",");
         }
         printf(" |");
 
         size = split_ids(ped->id_produto,&ids);
         split_ids(ped->qtd_produto,&quant);
-        for(int j=0;j<size;j++)
+        for(int j = 0; j < size; j++)
         {
             //printf(" %i ",ids[j]);
             prod = get_produto(array_prod,_pesquisar_id_produto(array_prod,ids[j]));
@@ -113,20 +129,20 @@
         free(quant);
     }
 
-    void ver_pedidos(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
+    void ver_pedidos(Array_pedidos * array, Array_cliente * array_clie, Array_produtos * array_prod)
     {
         Pedido * ped;
         printf(" ___________________ PEDIDOS_________________\n");
         printf(" ID PEDIDO | CLIENTES | PRODUTOS x QUANTIDADE | PRECO DE CUSTO | PRECO DE VENDA | DATA | STATUS\n");
-        for(int i=0;i<array->size;i++)
+        for(int i = 0; i < array->size;i++)
         {
             ped = get_pedido(array,i);
             print_pedido(ped,array_clie,array_prod);
         }
-
+        
     }
 
-    Pedido *  pesquisar_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
+    Pedido *  pesquisar_pedido(Array_pedidos * array, Array_cliente * array_clie, Array_produtos * array_prod)
     {
         char op[100];
         Cliente * clie;
@@ -135,9 +151,9 @@
         fflush(stdin);
         gets(op);
         int *ids = (int*)malloc(sizeof(int));
-        if(e_numero(op)==1)
+        if(e_numero(op) == 1)
         {
-            ped =  get_pedido(array,pesquisar_id_pedido(array,atoi(op)));
+            ped =  get_pedido(array, pesquisar_id_pedido(array,atoi(op)));
             if(!ped)
             {
                 printf("Pedido não encontrado\n");
@@ -155,15 +171,15 @@
         }
         Pedido * ped2 = NULL;
         int first = 0;
-        for(int i=0;i<array->size;i++)
+        for(int i = 0; i < array->size; i++)
         {
             ped = get_pedido(array,i);
             int size = split_ids(ped->id_cliente,&ids);
-            for(int j=0;j<size;j++)
+            for(int j = 0; j < size; j++)
             {
                 if(clie->id == ids[j])
                 {
-                    print_pedido(ped,array_clie,array_prod);
+                    print_pedido(ped, array_clie, array_prod);
                     if(first == 0)
                     {
                         ped2 = ped;
@@ -177,10 +193,10 @@
         return ped2;
     }
 
-    void atualizar_status(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
+    void atualizar_status(Array_pedidos * array, Array_cliente * array_clie, Array_produtos * array_prod)
     {
         char status[100];
-        Pedido * ped = pesquisar_pedido(array,array_clie,array_prod);
+        Pedido * ped = pesquisar_pedido(array, array_clie, array_prod);
         if(!ped) return;
         printf("Digite o status do pedido");
         fflush(stdin);
@@ -189,14 +205,14 @@
         printf("Status atualizado com sucesso\n");
     }
 
-    void remover_pedido(Array_pedidos * array,Array_cliente * array_clie,Array_produtos * array_prod)
+    void remover_pedido(Array_pedidos * array, Array_cliente * array_clie, Array_produtos * array_prod)
     {
         int menu;
         printf("Digite o ID do pedido que deseja remover ou 0 para ver todos os pedidos:\n");
         scanf("%i",&menu);
         if(menu == 0)
         {
-            ver_pedidos(array,array_clie,array_prod);
+            ver_pedidos(array, array_clie, array_prod);
             printf("Digite o ID do pedido que deseja remover:\n");
             scanf("%i",&menu);
         }
@@ -211,7 +227,7 @@
 
     int get_id_pedido(Array_pedidos * array)
     {
-        Pedido * ped = get_pedido(array,array->size-1);
+        Pedido * ped = get_pedido(array, array->size-1);
         if(!ped) return -1;
         return ped->id + 1;
     }

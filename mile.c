@@ -3,7 +3,7 @@
 int main()
 {
 
-    int op = 1;
+    int op = 0;
     Array_produtos * array = construtor_array_produtos();
     get_tsv_produto(array,"produtos.tsv");
 
@@ -14,7 +14,7 @@ int main()
     Array_ingrediente * ingred_array = construtor_array_ingrediente();
     get_tsv_ingrediente(ingred_array, "ingredientes.tsv");
 
-    while(op != 0){
+    while(op == 0){
         op = menu_produtos();
 
         switch(op)
