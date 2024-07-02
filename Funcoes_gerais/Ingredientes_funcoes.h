@@ -46,7 +46,7 @@
         Ingrediente * ingrediente;
         
         //Verifica se a string informada pelo usuário se trata de uma palavra (nome) ou um número (id)
-        if (eh_numero(search) == 1)
+        if (e_numero(search) == 1)
         {
             ingrediente = get_ingrediente(array, pesquisar_id_ingrediente(array, atoi(search)));
         }
@@ -151,9 +151,6 @@
             
                 if(ingrediente != NULL)
                 {
-                    printf("\n\nDigite a quantidade que sera adicionada: ");
-                    scanf(" %s", search);
-
                     //verifica se o valor digitado pelo usuario eh um numero
                     while(valido == 0) 
                     {
