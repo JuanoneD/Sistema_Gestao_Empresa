@@ -44,7 +44,7 @@
         char email[30];
         char endereco[50];
 
-        printf("\n\n---------- CADASTRAR NOVO CLIENTE ----------");
+        printf("\n---------- CADASTRAR NOVO CLIENTE ----------\n");
         printf("\nNome: ");
         fflush(stdin); // permite que o usuário escreva mais de uma palavra sem dar erro
         gets(nome);    // semelhante ao scanf
@@ -71,8 +71,9 @@
     void deletar_clientes(Array_cliente *array)
     {
         char search[50];
+        char aux[50];
 
-        printf("\n\n---------- DELETAR CLIENTE ----------");
+        printf("\n---------- DELETAR CLIENTE ----------\n");
         printf("\nDigite o ID ou Nome do ingrediente que deseja deletar: ");
         fflush(stdin);      
         gets(search);
@@ -82,7 +83,7 @@
         //Verifica se a string informada pelo usuário se trata de uma palavra (nome) ou um número (id)
         if (e_numero(search) == 1)
         {
-            cliente = get_ingrediente(array, pesquisar_id_ingrediente(array, atoi(search)));
+            cliente = get_cliente(array, pesquisar_id_cliente(array, atoi(search)));
         }
         else
         {
@@ -92,14 +93,15 @@
         //Caso a identificação informada não corresponda com nenhum ingrediente, será retornado uma mensagem de erro
         if(cliente == NULL) 
         {
-            printf("\n\nIngrediente nao encontrado.");
+            printf("\n\nCliente nao encontrado.");
         }
         else 
         {
-            _deletar_ingrediente(array, cliente->id); 
+            strcpy(aux, cliente->nome);
+            _deletar_clientes(array, cliente->id); 
         }
 
-        printf("\nO(a) cliente %s foi deletado(a) com sucesso!", cliente->nome);
+        printf("\nO(a) cliente %s foi deletado(a) com sucesso!", aux);
     }
 
     // Função para pesquisar um cliente pelo nome ou id
@@ -107,7 +109,7 @@
     {
         char search[100];
 
-        printf("\n----------- Pesquisar Cliente -------------");
+        printf("\n----------- Pesquisar Cliente -------------\n");
 
         printf("\nDigite o ID ou Nome do cliente: ");
         scanf("%s", search);
@@ -131,13 +133,13 @@
         }
         else
         {
-            printf("\n\n---------- DADOS DO CLIENTE ----------");
+            printf("\n---------- DADOS DO CLIENTE ----------\n");
             printf("\nID: %i", cliente->id);
             printf("\nNome: %s", cliente->nome);
             printf("\nCPF: %s", cliente->cpf);
             printf("\nTelefone: %s", cliente->telefone);
             printf("\nE-mail: %s", cliente->email);
-            printf("\nEndereco: %s", cliente->endereco);
+            printf("\nEndereco: %s\n", cliente->endereco);
         }
 
         return cliente;
@@ -146,7 +148,7 @@
     // Função para visualizar o array de clientes em ordem alfabética ou por id (crescente e decrescente)
     void visualizar_clientes(Array_cliente *array)
     {
-        printf("\n\nTipos de visualizacao: \n");
+        printf("\nTipos de visualizacao: \n");
         printf("1 - Ordem alfabetica \n");
         printf("2 - Ordem de ID \n");
 
@@ -158,10 +160,12 @@
         switch (op)
         {
             case 1:
+                system("cls");
                 ordem_alfabetica_cliente(array, 0, array->size - 1);
                 break;
 
             case 2:
+                system("cls");
                 organizar_array(array);
                 break;
             }
@@ -169,10 +173,10 @@
         // Se a lista estiver vazia, será retornada uma mensagem
         if (array->array == NULL)
         {
-            printf("A lista de clientes esta vazia.");
+            printf("\nA lista de clientes esta vazia.");
         }
 
-        printf("\n\n---------- LISTA DE CLIENTES ----------");
+        printf("\n---------- LISTA DE CLIENTES ----------\n");
         printf("\n|  ID  |   NOME   |   CPF   | TELEFONE |  E-MAIL  | ENDERECO |\n");
 
         for (int i = 0; i < array->size; i++)
@@ -191,7 +195,7 @@
     // Função para editar as informações de um cliente específico
     void editar_cliente(Array_cliente *array, int id)
     {
-        printf("\n\n----------- EDITAR CLIENTE -------------");
+        printf("\n----------- EDITAR CLIENTE -------------\n");
         printf("\nAntes de editar, sera preciso verificar o cliente na lista\n");
 
         Cliente *cliente = pesquisar_cliente(array);

@@ -19,9 +19,12 @@ int main()
     
     int op_menu = 0;
     int acabar = 0;
+    char buffer[50];
 
     while (op_menu != 6)
     {
+        system("cls");
+
         printf("\n-----------------------------------------\n");
         printf("|---------------- Menu -----------------|\n");
         printf("|----- 1 - Clientes --------------------|\n");
@@ -48,28 +51,49 @@ int main()
                 acabar = 0;
                 while (acabar == 0)
                 {
+                    system("cls");
                     int op = menu_clientes();
 
                     switch (op)
                     {
                         case 1:
+                            system("cls");
                             add_cliente(array_clie, id_cliente++);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 2:
+                            system("cls");
                             deletar_clientes(array_clie);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 3:
+                            system("cls");
                             pesquisar_cliente(array_clie);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                             
                         case 4:
+                            system("cls");
                             editar_cliente(array_clie, id_cliente++);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                         
                         case 5:
+                            system("cls");
                             visualizar_clientes(array_clie);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 6:
@@ -84,28 +108,49 @@ int main()
                 acabar = 0;
                 while (acabar == 0)
                 {
+                    system("cls");
                     int op = menu_ingredientes();
 
                     switch (op)
                     {
                         case 1:
+                            system("cls");
                             add_ingrediente(array_ingred, id_ingred++);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 2:
+                            system("cls");
                             deletar_ingrediente(array_ingred);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 3:
+                            system("cls");
                             pesquisar_ingrediente(array_ingred);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                             
-                        case 4:
+                        case 4: 
+                            system("cls");
                             editar_ingrediente(array_ingred, id_ingred++);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                         
                         case 5:
+                            system("cls");
                             visualizar_ingredientes(array_ingred);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                         case 6:
                             acabar++;
@@ -120,28 +165,49 @@ int main()
                 acabar = 0;
                 while (acabar == 0)
                 {
+                    system("cls");
                     int op = menu_produtos();
 
                     switch (op)
                     {
                         case 1:
+                            system("cls");
                             adicionar_produto(array_prod, array_ingred, id_produto++);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 2:
+                            system("cls");
                             deletar_produto(array_prod);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 3:
+                            system("cls");
                             pesquisar_produto(array_prod, array_ingred);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                             
                         case 4:
-                            visualizar_produtos(array_prod);
+                            system("cls");
+                            visualizar_produtos(array_prod,array_ingred);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                         
                         case 5:
+                            system("cls");
                             editar_produto(array_prod, array_ingred, id_produto++);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 6:
@@ -156,28 +222,49 @@ int main()
                 acabar = 0;
                 while (acabar == 0)
                 {
+                    system("cls");
                     int op = menu_pedido();
 
                     switch (op)
                     {
                         case 1:
+                            system("cls");
                             add_pedido(array_ped, array_clie, array_prod, array_ingred, id_pedido++, &id_cliente, &id_produto);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 2:
+                            system("cls");
                             ver_pedidos(array_ped, array_clie, array_prod);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 3:
+                            system("cls");
                             pesquisar_pedido(array_ped, array_clie, array_prod);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                             
                         case 4:
+                            system("cls");
                             atualizar_status(array_ped, array_clie, array_prod);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
                         
                         case 5:
+                            system("cls");
                             remover_pedido(array_ped,array_clie,array_prod);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
                             break;
 
                         case 6:
@@ -192,33 +279,43 @@ int main()
             
             //Funções controle financeiro
             case 5:
+
                 acabar = 0;
+
                 while (acabar == 0)
                 {
+                    system("cls");
                     int op = menu_financeiro();
+
                     switch (op)
                     {
-                    case 1:
-                        gerar_relatorio_finan(array_ped);
-                        break;
-                    
-                    case 2:
-                        acabar ++;
-                        break;
-                    }
+                        case 1:
+                            system("cls");
+                            gerar_relatorio_finan(array_ped);
+                            printf("\n\nAperte enter para continuar");
+                            fflush(stdin);
+                            gets(buffer);
+                            break;
+                        
+                        case 2:
+                            acabar ++;
+                            break;
+                        }
                 }
                 
                 break;
             
             //Sair
             case 6:
-                printf("FLW");
+                printf("\nAte logo!");
                 break;
         }
     }
+
     set_tsv_pedido(array_ped, "pedidos.tsv");
     set_tsv_cliente(array_clie, "clientes.tsv");
     set_tsv_ingrediente(array_ingred, "ingredientes.tsv");
     set_tsv_produtos(array_prod, "produtos.tsv");
+
     return 1;
 }

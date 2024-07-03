@@ -34,6 +34,8 @@ void gerar_relatorio_finan(Array_pedidos * array_ped)
 {
     char data_ini[20],data_fim[20];
     
+    printf("\n----------- GERAR RELATORIO -------------\n");
+
     printf("\nEscreva a data de inicio mm/aa: ");
     fflush(stdin);
     gets(data_ini);
@@ -47,8 +49,8 @@ void gerar_relatorio_finan(Array_pedidos * array_ped)
     
     FILE * arq = fopen("Financeiro.txt","w");
     fprintf(arq,"\n\nRelatorio de %s a %s \n",data_ini,data_fim);
-    fprintf(arq," PED | SAIDA | ENTRADA | LUCRO\n");
-    printf(" PED | SAIDA | ENTRADA | LUCRO\n");
+    fprintf(arq," PEDIDO | SAIDA | ENTRADA | LUCRO\n");
+    printf("\n PEDIDO | SAIDA | ENTRADA | LUCRO\n\n");
     
     for(int i = 0; i < array_ped->size; i++)
     {

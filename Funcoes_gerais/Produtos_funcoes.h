@@ -14,9 +14,9 @@
         printf("\n|------ 1 - Inserir novo produto ------|");
         printf("\n|------ 2 - Remover um produto --------|");
         printf("\n|------ 3 - Pesquisar um produto ------|");
-        printf("\n|------ 4 - Vizualizar produtos -------|");
+        printf("\n|------ 4 - Visualizar produtos -------|");
         printf("\n|------ 5 - Editar produto ------------|");
-        printf("\n|------ 6 -  Sair ---------------------|");
+        printf("\n|------ 6 - Sair ----------------------|");
         printf("\n---------------------------------------\n");
 
         printf("\n\nDigite a opcao desejada: ");
@@ -43,7 +43,7 @@
         char ingredientes[60];
         float preco;
 
-        printf("\n ------- Inserir novo Produto ---------");
+        printf("\n------- INSERIR NOVO PRODUTO ---------\n");
         printf("\nNome do produto: ");
         fflush(stdin);
         gets(nome);
@@ -102,7 +102,7 @@
     {
         char search[50];
 
-        printf("\n----------- Pesquisar Produto -------------");
+        printf("\n----------- PESQUISAR PRODUTO -------------\n");
 
         printf("\nDigite o ID ou Nome do produto que deseja pesquisar: ");
         fflush(stdin);
@@ -121,7 +121,7 @@
 
         if( produto == NULL)
         {
-            printf("\nProduto não encontrado! ");
+            printf("\nProduto nao encontrado! ");
             return NULL;
         } 
         else 
@@ -148,10 +148,11 @@
     }
 
     //Função para visualizar o array de produtos em ordem alfabética ou por id (crescente e decrescente)
-    void visualizar_produtos(Array_produtos * array)
+    void visualizar_produtos(Array_produtos * array,Array_ingrediente * array_ingred)
     {
         int op;
 
+        printf("\nTipos de visualizacao: ");
         printf("\n1 - Visualizar em ordem alfabetica");
         printf("\n2 - Visualizar em ordem de ID");
 
@@ -161,40 +162,58 @@
         switch (op)
         {
             case 1:
+                system("cls");
                 _ordem_alfabetica_produto(array, 0, array->size-1);
                 break;
             
             case 2:
+                system("cls");
                 organizar_array_produtos(array);
                 break;
         }
 
-        printf("\n--------- Lista de Produtos -------\n");
-        printf("\nID\t| NOME\t\t| INGREDIENTES\t\t| UNI MED\t\t|  PRECO");
+        printf("\n--------- LISTA DE PRODUTOS -------\n");
+        printf("\n| ID | NOME | INGREDIENTES | UNI MED |  PRECO |");
 
         for (int i = 0; i < array->size; i++)
         {
             Produto * produto = get_produto(array, i);
             
-            printf("\n%i\t", produto->id);
-            printf(" %s\t\t", produto->nome);
-            printf(" %s\t\t", produto->ingredientes);
-            printf(" %s\t\t", produto->uniMedida);
-            printf("%f\t\t", produto->preco);         
+            printf("\n%i", produto->id);
+            printf(" %s", produto->nome);
+            int *ids =(int *)malloc(sizeof(int));
+            int size = split_ids(produto->ingredientes,&ids);
+            for(int i = 0; i < size; i++)
+            {
+                Ingrediente * ingred = get_ingrediente(array_ingred,pesquisar_id_ingrediente(array_ingred,ids[i]));
+                
+                if(!ingred)
+                {
+                    break;  
+                }
+                else
+                {
+                    printf(",");
+                } 
+
+                printf(" %s", ingred->nome);
+            }
+            printf(" %s", produto->uniMedida);
+            printf(" %.2f", produto->preco);         
         }
     }
 
     //Função para editar as informações de um produto específico
     void editar_produto(Array_produtos * array, Array_ingrediente * ingred_array, int id)
     {
-        printf("\n----------- Editar Produto -------------");
-        Produto * produto =  pesquisar_produto(array,ingred_array);
+        printf("\n----------- EDITAR PRODUTO -------------\n");
+        printf("\nAntes de editar, sera preciso verificar o item no estoque\n");
+
+        Produto * produto =  pesquisar_produto(array, ingred_array);
     
         if(produto != NULL)
         {
-            printf("\n------ EDICAO DO PRODUTO ------");
-
-            printf("\nNome do produto: ");
+            printf("\n\nNome do produto: ");
             fflush(stdin);
             gets(produto->nome);
 
