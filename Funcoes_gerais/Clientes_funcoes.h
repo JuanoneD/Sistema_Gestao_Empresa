@@ -70,25 +70,36 @@
     // Função que remove um cliente do array de clientes
     void deletar_clientes(Array_cliente *array)
     {
-        char nome[50];
+        char search[50];
 
         printf("\n\n---------- DELETAR CLIENTE ----------");
-        printf("\nNome: ");
-        fflush(stdin);
-        gets(nome);
+        printf("\nDigite o ID ou Nome do ingrediente que deseja deletar: ");
+        fflush(stdin);      
+        gets(search);
 
-        // Pesquisa se o nome informado faz parte da lista de clientes
-        Cliente *cliente = pesquisar_nome_cliente(array, nome);
+        Cliente * cliente;
 
-        // Caso o nome informado não corresponda com nenhum nome do array clientes, será retornada uma mensagem de erro
-        if (cliente == NULL)
+        //Verifica se a string informada pelo usuário se trata de uma palavra (nome) ou um número (id)
+        if (e_numero(search) == 1)
         {
-            printf("\nCliente nao encontrado.");
-            menu_clientes();
+            cliente = get_ingrediente(array, pesquisar_id_ingrediente(array, atoi(search)));
+        }
+        else
+        {
+            cliente = pesquisar_nome_cliente(array,search);
         }
 
-        _deletar_clientes(array, cliente->id);
-        printf("\nO cliente %s foi deletado com sucesso!", nome);
+        //Caso a identificação informada não corresponda com nenhum ingrediente, será retornado uma mensagem de erro
+        if(cliente == NULL) 
+        {
+            printf("\n\nIngrediente nao encontrado.");
+        }
+        else 
+        {
+            _deletar_ingrediente(array, cliente->id); 
+        }
+
+        printf("\nO(a) cliente %s foi deletado(a) com sucesso!", cliente->nome);
     }
 
     // Função para pesquisar um cliente pelo nome ou id
@@ -162,12 +173,12 @@
         }
 
         printf("\n\n---------- LISTA DE CLIENTES ----------");
+        printf("\n|  ID  |   NOME   |   CPF   | TELEFONE |  E-MAIL  | ENDERECO |\n");
 
         for (int i = 0; i < array->size; i++)
         {
             Cliente *cliente = get_cliente(array, i);
 
-            printf("\n|  ID  |   NOME   |   CPF   | TELEFONE |  E-MAIL  | ENDERECO |\n");
             printf("| %i |", cliente->id);
             printf(" %s |", cliente->nome);
             printf(" %s |", cliente->cpf);

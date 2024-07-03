@@ -54,7 +54,7 @@
 
         printf("\n---Ingredientes---");
         visualizar_ingredientes(ingred_array);
-        printf("\nIDs Ingredientes: ");
+        printf("\n\nIDs Ingredientes: ");
         fflush(stdin);
         gets(ingredientes);
 
@@ -64,7 +64,7 @@
         // Adiciona um produto a lista de produtos e no tsv , essa função de fato adiciona o produto
         _add_produto(array, id, nome, uniMedida, ingredientes, preco);
 
-        printf("O produto '%s' foi adicionado com sucesso!", nome);
+        printf("\nO produto '%s' foi adicionado com sucesso!", nome);
     }
 
     // o usuário irá inserir o nome ou id do produto que deseja
@@ -89,11 +89,11 @@
 
         if( produto == NULL)
         {
-            printf("Produto não encontrado! ");
+            printf("\nProduto não encontrado! ");
             return;
         } 
         _deletar_produtos(array, produto->id);
-        printf("Deletado com sucesso");
+        printf("\nDeletado com sucesso");
     }
 
 
@@ -121,7 +121,7 @@
 
         if( produto == NULL)
         {
-            printf("Produto não encontrado! ");
+            printf("\nProduto não encontrado! ");
             return NULL;
         } 
         else 
@@ -140,7 +140,7 @@
             }
 
             printf("\nUnidade de medida: %s", produto->uniMedida);
-            printf("\nPreco:R$ %.2f", produto->preco);
+            printf("\nPreco: R$ %.2f", produto->preco);
 
         }
 
@@ -152,7 +152,7 @@
     {
         int op;
 
-        printf("\n1 - Visulizar em ordem alfabetica");
+        printf("\n1 - Visualizar em ordem alfabetica");
         printf("\n2 - Visualizar em ordem de ID");
 
         printf("\nOpcao: ");
@@ -202,7 +202,8 @@
             fflush(stdin);
             gets(produto->uniMedida);
 
-            printf("\nIDs Ingredientes: ");
+            visualizar_ingredientes(ingred_array);
+            printf("\n\nIDs Ingredientes: ");
             fflush(stdin);
             gets(produto->ingredientes);
 
