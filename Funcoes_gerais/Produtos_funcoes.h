@@ -179,8 +179,8 @@
         {
             Produto * produto = get_produto(array, i);
             
-            printf("\n%i", produto->id);
-            printf(" %s", produto->nome);
+            printf("\n| %i |", produto->id);
+            printf(" %s |", produto->nome);
             int *ids =(int *)malloc(sizeof(int));
             int size = split_ids(produto->ingredientes,&ids);
             for(int i = 0; i < size; i++)
@@ -191,15 +191,11 @@
                 {
                     break;  
                 }
-                else
-                {
-                    printf(",");
-                } 
-
-                printf(" %s", ingred->nome);
+                printf(" %s ", ingred->nome);
+                if(get_ingrediente(array_ingred,pesquisar_id_ingrediente(array_ingred,ids[i+1])))printf(",");
             }
-            printf(" %s", produto->uniMedida);
-            printf(" %.2f", produto->preco);         
+            printf("| %s |", produto->uniMedida);
+            printf(" %.2f |", produto->preco);         
         }
     }
 

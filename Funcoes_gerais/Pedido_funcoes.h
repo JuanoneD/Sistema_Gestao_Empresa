@@ -98,7 +98,7 @@
         printf("\nEscreva a data de entrega dd/mm/aa ");
         scanf(" %s",data);
 
-        _add_pedido(array,id_pedido,new_client_id,new_product_id,qtd_produto,cust,cust*1.75,data,"\nPreparação");
+        _add_pedido(array,id_pedido,new_client_id,new_product_id,qtd_produto,cust,cust*1.75,data,"Preparação");
     }
 
     //Função que retorna um único pedido
